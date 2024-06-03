@@ -1,0 +1,56 @@
+/* 移除编辑器容器的边框 */
+.ProseMirror{
+    border: none;
+    outline: none;
+    box-shadow: none;
+    &:focus{
+        outline: none;
+    }
+  }
+  
+  /* 移除编辑器内部元素的默认边框 */
+  .ProseMirror p,
+  .ProseMirror h1,
+  .ProseMirror h2,
+  .ProseMirror h3,
+  .ProseMirror h4,
+  .ProseMirror h5,
+  .ProseMirror h6,
+  .ProseMirror blockquote,
+  .ProseMirror ol,
+  .ProseMirror ul,
+  .ProseMirror pre,
+  .ProseMirror code,
+  .ProseMirror code[class*="language-"] {
+    border: none;
+    &:focus {
+        outline: none;
+    }
+  }
+  
+  /* 移除列表项的默认边框 */
+  .ProseMirror li {
+    border: none;
+  }
+  
+  /* 移除表格的默认边框 */
+  .ProseMirror table {
+    border-collapse: collapse;
+  }
+  
+  .ProseMirror table td,
+  .ProseMirror table th {
+    border: none;
+  }
+  
+  /* 移除编辑器工具栏的边框 */
+  .tiptap-toolbar {
+    border: none;
+    box-shadow: none;
+  }
+  
+  /* 如果编辑器使用了菜单面板，移除菜单面板的边框 */
+  .ProseMirror-menubar {
+    border: none;
+    box-shadow: none;
+  }

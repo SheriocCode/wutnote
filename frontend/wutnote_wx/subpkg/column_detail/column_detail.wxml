@@ -1,0 +1,19 @@
+<!--subpkg/column_detail/column_detail.wxml-->
+<!-- 专栏简介 -->
+<view class="top-container">
+  <view class="left-box">
+    <image src="" mode="widthFix"/>
+  </view>
+  <view class="right-box">
+    <view class="title">{{column_name}}</view>
+    <view class="info">{{column_info}}</view>
+  </view>
+</view>
+
+
+<!-- 专栏文章 -->
+<view class="notes-container">
+  <scroll-view scroll-y="true" scroll-top="{{scrollTop}}" style="height: {{noteHeight}}px;">
+    <my-notes items="{{notesList}}"></my-notes>
+  </scroll-view>
+</view>  

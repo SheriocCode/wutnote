@@ -1,0 +1,39 @@
+/* pages/login/login.wxss */
+.login-container{
+  /* background-color: yellow; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.login-box{
+  /* background-color: pink; */
+  /* border: 1px solid var(--theme-color); */
+  height: 500rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.title{
+  margin-bottom: 40rpx;
+  text-align: center;
+  font-size: 22px;
+  font-family: "黑体";
+  color: var(--theme-color);
+}
+.input-item{
+  display: flex;
+  align-items: center;
+  color: var(--theme-color);
+}
+input{
+  border: 1px solid var(--border-color);
+  width: 500rpx;
+  height: 70rpx;
+  margin: 40rpx;
+}
+button{
+  background-color: var(--theme-color);
+  color: white;
+  font-size: 14px;
+}

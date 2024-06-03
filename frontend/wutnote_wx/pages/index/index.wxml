@@ -1,0 +1,36 @@
+<!--index.wxml-->
+<!-- 搜索框 -->
+<view class="search-container">
+  <view class="search-box" bind:tap="navToSearch">
+    <icon type="search"/>
+    <text class="placeholder">搜索</text>
+  </view>
+</view>
+
+<!-- 标签栏 -->
+<scroll-view class="tags-container" scroll-x="true" scroll-left="{{scrollLeft}}" lower-threshold="20rpx">
+  <view class="tag-item" wx:for="{{tags}}" wx:key="index">
+    {{item.tagname}}
+  </view>
+</scroll-view>
+
+<view class="notes-container">
+  <view class="note-item" wx:for="{{notesList}}" wx:key="index">
+    <view class="title">{{item.title}}</view>
+    <view class="abstract">{{item.abstract}}</view>
+    <view class="bottom-box">
+      <view class="note-tags-box">
+        <view class="note-tag-item" wx:for="{{item.tags}}" wx:for-item="tags" wx:key="index">
+          {{tags.tagname}}
+        </view>
+      </view>
+      <view class="num-box">
+        <view class="num-item">{{item.borwse_num}}阅读</view>
+        <view class="num-item">{{item.collect_num}}收藏</view>
+        <view class="num-item">{{item.like_num}}赞</view>
+      </view>
+    </view>
+  </view>
+</view>
+
+

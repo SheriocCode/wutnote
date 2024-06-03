@@ -1,0 +1,6 @@
+<view class="columns-container">
+  <view class="column-item" wx:for="{{items}}" wx:for-item="item" wx:key="index" data-item="{{item}}" bind:tap="navToColumn">
+    <view class="name">{{item.name}}</view>
+    <view class="note-num">{{item.note_num}}篇笔记</view>
+  </view>
+</view>

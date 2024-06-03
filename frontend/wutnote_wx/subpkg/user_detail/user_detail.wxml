@@ -1,0 +1,24 @@
+<!--subpkg/user_detail/user_detail.wxml-->
+<view class="user-info-container">
+  <view class="user-info-box">
+    <view class="user-info-item">
+    <!-- <view></view> -->
+      <image src="{{user_avatar}}"  mode="widthFix"/>
+      <text>{{user_name}}</text>
+    </view>
+  </view>
+</view>
+
+  <!-- 文章信息菜单 -->
+  <view class="admin-detail-box">
+    <view class="admin-nav">
+      <view class="nav-item {{noteActive==1?'active':''}}" bind:tap="noteActiveSelect" data-active="1">笔记</view>
+      <view class="nav-item {{noteActive==2?'active':''}}" bind:tap="noteActiveSelect" data-active="2">专栏</view>
+    </view>
+    <scroll-view  scroll-y="true" scroll-top="{{scrollTop}}" style="height: {{noteHeight-30}}px;">
+      <!-- 我的笔记信息菜单 -->
+      <my-notes wx:if="{{noteActive==1}}" items="{{myNotesList}}"></my-notes>
+      <!-- 我的专栏信息菜单 -->
+      <my-column wx:if="{{noteActive==2}}" items="{{columnList}}"></my-column>
+    </scroll-view>
+</view> 

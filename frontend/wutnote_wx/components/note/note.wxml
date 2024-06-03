@@ -1,0 +1,6 @@
+<view class="notes-container">
+  <view class="note-item" wx:for="{{items}}" wx:key="index" data-item="{{items}}" bind:tap="navToNoteDeatil">
+    <view class="title">{{item.title}}</view>
+    <view class="note-user">博客</view>
+  </view>
+</view>

@@ -1,0 +1,8 @@
+/**app.wxss**/
+page{
+  --theme-color:#409EFF;
+  --tag-color:#999AA9;
+  --tag-fontSize:20rpx;
+  --border-color:#E9E9E9;
+  --active-color:#CAE1F8;
+}

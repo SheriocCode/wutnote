@@ -1,0 +1,16 @@
+body, html, p, div{
+    margin: 0;
+    padding: 0;
+    outline: none;
+}
+a{
+    color: initial; /* 覆盖激活时的颜色 */
+    text-decoration: none;
+}
+$border-color:#EBEBEB;  //边框线
+$text-color:#B4B4B4;  //文字
+$menubar-bgcolor:#F5F5F5;
+$active-color:#CDCDCD;
+$block-color:#EEF0F4;  //块应用
+$block-border-color:#DDDFE4; //块应用行提示
+$note-block-color:#DDDFE4;  //笔记行提示

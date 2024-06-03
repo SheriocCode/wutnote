@@ -1,0 +1,7 @@
+<!--subpkg/search/search.wxml-->
+<view class="search-container">
+  <view class="search-box" bind:tap="navToSearch">
+    <icon type="search"/>
+    <input type="text" placeholder="搜索" bindinput="handleInput"/>
+  </view>
+</view>

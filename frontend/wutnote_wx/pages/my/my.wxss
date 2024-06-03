@@ -1,0 +1,134 @@
+/* pages/my/my.wxss */
+.my-container{
+  /* background-color: pink; */
+  background: linear-gradient(to bottom, var(--theme-color), var(--theme-color) 0%, white 30%);
+  padding: 20rpx 30rpx;
+}
+.my-info-container{
+  background-color: white;
+  border-radius: 10px;
+  padding: 25rpx 30rpx;
+  box-shadow: 0 18rpx 5rpx 0rpx rgb(228, 225, 225,0.2);
+}
+.top-info-box{
+  border-bottom:1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  padding-bottom: 16rpx;
+}
+image{
+  width: 130rpx;
+  height: 130rpx;
+  margin-right: 16rpx;
+  border-radius: 50%;
+}
+/* .right-info{
+  
+} */
+.username{
+  background-color: #ffffff;
+  display: flex;
+  padding: 2rpx 0;
+}
+.num{
+  display: flex;
+}
+.num-item{
+  margin-right: 20rpx;
+}
+.num .name{
+  font-size: 25rpx;
+  color: var(--tag-color);
+  margin-right: 10rpx;
+}
+.num .count{
+  font-size: 28rpx;
+  /* font-weight: bold; */
+}
+.bottom-info-box{
+  display: flex;
+  justify-content: space-between;
+  /* background-color: pink; */
+}
+.bottom-info-box .active{
+  border-bottom: 2px solid var(--active-color);
+}
+.bottom-item{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20rpx 0;
+}
+.bottom-item image{
+  width: 70rpx;
+  margin: 16rpx 0;
+}
+.bottom-item text{
+  font-size: 28rpx;
+}
+
+
+
+.admin-detail-container{
+  /* border: 1px solid black; */
+  /* padding: ; */
+}
+.admin-detail-box{
+  /* background-color: pink; */
+  border-radius: 10rpx;
+  box-shadow: 0 0 0rpx 5rpx rgb(228, 225, 225,0.3);
+  padding: 26rpx 10rpx;
+  margin: 0 40rpx;
+}
+.admin-nav{
+  display: flex;
+  justify-content: space-around; 
+  padding-bottom: 20rpx;
+}
+.admin-nav .active{
+  border-bottom: 2px solid var(--active-color);
+}
+
+
+.concern-box{
+  display: flex;
+  padding: 16rpx;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom:1px solid var(--border-color) ;
+}
+.concern-left-box{
+  display: flex;
+  align-items: center;
+}
+.concern-left-box .concern-image{
+  margin-right: 14rpx;
+  width: 90rpx;
+  height: 90rpx;
+  border-radius: 50%;
+  /* background-color: pink; */
+}
+.concern-image image{
+  width: 100%;
+  height: 100% !important;
+}
+.concern-left-item{
+  display: flex;
+  flex-direction: column;
+}
+.concern-left-item .nickname{
+  font-size: 26rpx;
+  font-weight: bold;
+}
+.concern-left-item .signature{
+  font-size: var(--tag-fontSize);
+  color: var(--tag-color);
+}
+.concern-right-item{
+  font-size: 26rpx;
+  color: var(--tag-color);
+  border: 1px solid var(--tag-color);
+  border-radius: 25rpx;
+  padding: 10rpx 20rpx;
+}
+

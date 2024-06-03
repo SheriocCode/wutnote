@@ -1,0 +1,16 @@
+notes-container{
+  padding: 20rpx;
+}
+.note-item{
+  border-bottom: 1px solid var(--border-color);
+  padding: 20rpx;
+}
+.title{
+  font-size: 26rpx;
+  font-weight: bold;
+  margin-bottom: 15rpx;
+}
+.note-user{
+  font-size: 22rpx;
+  color: var(--tag-color);
+}

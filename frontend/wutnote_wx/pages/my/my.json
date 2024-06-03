@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "my-notes":"../../components/note/note",
+    "my-column":"../../components/column/column"
+  },
+  "permission":"auth"
+}

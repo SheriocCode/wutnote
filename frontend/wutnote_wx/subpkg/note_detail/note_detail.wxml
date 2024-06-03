@@ -1,0 +1,5 @@
+<!--subpkg/note_detail/note_detail.wxml-->
+<view>
+  <import src="../../towxml/entry"/>
+  <template is="entry" data="{{...noteContent}}"/>
+</view>

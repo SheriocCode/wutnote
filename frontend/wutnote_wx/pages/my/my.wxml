@@ -1,0 +1,84 @@
+<!--pages/my/my.wxml-->
+<!-- 个人信息模块 -->
+<view class="my-container">
+  <view class="my-info-container">
+    <view class="top-info-box">
+        <image src="{{userInfo.avator}}" mode="widthFix"/>
+        <view class="right-info">
+          <button wx:if="!isLogin" class="username" open-type="getUserInfo">{{ userInfo.username}}</button>
+          <button wx:else class="username">{{ userInfo.username}}</button>
+          <view class="num">
+            <view class="num-item">
+              <text class="name">关注</text>
+              <text class="count">{{ userInfo.recordCount}}</text>
+            </view>
+            <view>
+              <text class="name">粉丝</text>
+              <text class="count">{{ userInfo.recordCount}}</text>
+            </view>
+          </view>
+        </view>    
+    </view>
+    <view class="bottom-info-box">
+      <view class="bottom-item {{navActive==1 ? 'active':''}}" bind:tap="navSelect" data-active="1">
+        <image src="../../images/note.png" mode="widthFix"/>
+        <text>我的文章</text>
+      </view>
+      <view class="bottom-item {{navActive==2 ? 'active':''}}" bind:tap="navSelect" data-active="2">
+        <image src="../../images/star.png" mode="widthFix"/>
+        <text>我的收藏</text>
+      </view>
+      <view class="bottom-item {{navActive==3 ? 'active':''}}" bind:tap="navSelect" data-active="3">
+        <image src="../../images/gz.png" mode="widthFix"/>
+        <text>我的关注</text>
+      </view>
+    </view>
+  </view>
+</view>
+
+
+  <!-- 我的文章信息菜单 -->
+<view wx:if="{{navActive==1}}" class="admin-detail-box">
+  <view class="admin-nav">
+    <view class="nav-item {{noteActive==1?'active':''}}" bind:tap="noteActiveSelect" data-active="1">我的笔记</view>
+    <view class="nav-item {{noteActive==2?'active':''}}" bind:tap="noteActiveSelect" data-active="2">我的专栏</view>
+  </view>
+  <scroll-view  scroll-y="true" scroll-top="{{scrollTop}}" style="height: {{noteHeight-30}}px;">
+    <!-- 我的笔记信息菜单 -->
+    <my-notes wx:if="{{noteActive==1}}" items="{{myNotesList}}"></my-notes>
+    <!-- 我的专栏信息菜单 -->
+    <my-column wx:if="{{noteActive==2}}" items="{{columnList}}"></my-column>
+  </scroll-view>
+</view> 
+
+
+<!-- 我的收藏信息菜单 -->
+<view wx:if="{{navActive==2}}" class="admin-detail-box">
+  <scroll-view scroll-y="true" scroll-top="{{scrollTop}}" style="height: {{noteHeight}}px;">
+    <my-notes items="{{collectList}}"></my-notes>
+  </scroll-view>
+</view> 
+
+
+<!-- 我的关注信息菜单 -->
+<view wx:if="{{navActive==3}}" class="admin-detail-box">
+  <scroll-view scroll-y="true" scroll-top="{{scrollTop}}" style="height: {{noteHeight}}px;">
+    <view class="concern-box" wx:for="{{concernList}}" wx:for-item="item" wx:key="index" bind:tap="navToUserDetail" data-item="{{item}}">
+      <view class="concern-left-box">
+        <view class="concern-image">
+          <image src="{{item.avator}}" mode="widthFix"/>
+        </view>
+        <view class="concern-left-item">
+          <text class="nickname">{{item.nickname}}</text>
+          <text class="signature">{{item.signature}}</text>
+        </view>
+      </view>
+      <view class="concern-right-item">已关注</view>
+    </view>
+  </scroll-view>
+</view> 
+
+
+
+
+
