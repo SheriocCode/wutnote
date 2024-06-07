@@ -2,8 +2,8 @@ import axios from 'axios'
 
 // 创建axios实例
 const httpInstance = axios.create({
-  baseURL: 'https://mock.apifox.com/m1/4248529-3889906-default',
-//   baseURL:'https://mock.apifox.com/m1/3139398-1337626-default',
+  // baseURL: 'https://mock.apifox.cn/m1/4248529-3889906-default',
+  baseURL:'http://127.0.0.1:8000',
   timeout: 5000
 })
 

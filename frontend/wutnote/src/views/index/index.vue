@@ -7,7 +7,7 @@
     <el-container class="main-box" height="95%">
         <el-aside width="200px">
                     <el-menu class="aside-menu">
-                        <router-link to="/note/list">
+                        <router-link to="/home">
                             <el-menu-item index="1">
                                 <el-icon><House /></el-icon>
                                 <template #title><span>首页</span></template>
@@ -19,11 +19,12 @@
                                 <template #title>创作中心</template>
                             </el-menu-item>
                         </router-link>
-                        
+                        <router-link to="/my">
                             <el-menu-item index="3">
                                 <el-icon><Avatar /></el-icon>
                                 <template #title>个人信息</template>
                             </el-menu-item>
+                        </router-link>
                     </el-menu>
         </el-aside>
         <el-main>

@@ -1,6 +1,6 @@
 import { Extension } from '@tiptap/core';
 
-const FontSize = Extension.create({
+export const FontSize = Extension.create({
   name: 'font-size',
 
   addOptions() {

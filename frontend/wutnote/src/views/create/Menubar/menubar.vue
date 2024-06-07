@@ -9,6 +9,7 @@
         }
     });
     
+    // 基础样式设置
     const items = reactive([
     {
         icon:'icon-chexiao',
@@ -120,17 +121,57 @@
             props.editor.chain().focus().toggleBlockquote().run()
         },
         isActive: () => props.editor.isActive('blockquote')
-      },{
-        icon: 'icon-biaodanzujian-biaoge',
-        title: '表格',
-        action: function(){
-            console.log("表格")
-            props.editor.chain().focus()
-          .insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run()
-        },
-        isActive: () => props.editor.isActive('blockquote')
-      },
+      }
     ])
+
+    // 表格样式设置
+    const tableItems = reactive({
+        icon:'icon-biaodanzujian-biaoge',
+        title:'表格',
+        items:[
+            {
+                title:'新增表格',
+                action: function(){
+                    props.editor.chain().focus().insertTable({ rows: 2, cols: 3 }).run();
+                }
+            },{
+                title:'删除表格',
+                action: function(){
+                    props.editor.chain().focus().deleteTable().run()
+                }
+            },{
+                title:'上面添加一行',
+                action: function(){
+                    props.editor.chain().focus().addRowBefore().run()
+                }
+            },{
+                title:'下面添加一行',
+                action: function(){
+                    props.editor.chain().focus().addRowAfter().run()
+                }
+            },{
+                title:'左边添加一列',
+                action: function(){
+                    props.editor.chain().focus().addColumnBefore().run()
+                }
+            },{
+                title:'右边添加一列',
+                action: function(){
+                    props.editor.chain().focus().addColumnAfter().run()
+                }
+            },{
+                title:'删除行',
+                action: function(){
+                    props.editor.chain().focus().deleteRow().run()
+                }
+            },{
+                title:'删除列',
+                action: function(){
+                    props.editor.chain().focus().deleteColumn().run()
+                }
+            }
+        ]
+    })
 
     // 点击激活样式
     const name = ref('');
@@ -151,6 +192,22 @@
                 <i :class="[item.icon,'iconfont']"></i>
                 <p>{{item.title}}</p>
             </div>
+            <el-dropdown trigger="click">
+                <div class="icon-item">
+                    <i :class="[tableItems.icon,'iconfont']"></i>
+                    <p style="margin-top:2px;">{{tableItems.title}}</p>
+                </div>
+                <template #dropdown>
+                <el-dropdown-menu>
+                    <el-dropdown-item 
+                        v-for="item in tableItems.items" 
+                        :key="item.title"
+                        @click="item.action">
+                        {{item.title}}
+                    </el-dropdown-item>
+                </el-dropdown-menu>
+                </template>
+            </el-dropdown>
         </div>
     </div>
 </template>
@@ -179,8 +236,5 @@
             font-size: 12px; 
         }
     }
-    // .active{
-    //     background-color: $active-color;
-    // }
 }
 </style>
