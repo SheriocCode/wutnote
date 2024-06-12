@@ -3,5 +3,6 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/frontend/wutnote" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/frontend/wutnote_wx" vcs="Git" />
   </component>
 </project>
