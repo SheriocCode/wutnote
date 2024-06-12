@@ -1,6 +1,11 @@
 <script setup>
     import { ref } from 'vue'
     import { useRouter } from 'vue-router'
+    // import { defineProps} from 'vue'
+
+    // const props = defineProps({
+    //     noteslist:Object
+    // })
 
     const notesList = ref([{
         note_id: 2,
@@ -41,7 +46,7 @@
 
     const router = useRouter()
     const navToNoteDetail = (id) =>{
-      console.log("id:"+id);
+      // console.log("id:"+id);
       router.push(`/note/${id}`)
     }
 </script>

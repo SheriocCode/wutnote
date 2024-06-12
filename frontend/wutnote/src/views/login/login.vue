@@ -2,7 +2,7 @@
     import { ref, reactive } from 'vue'
     import { ElMessage } from 'element-plus'
     import { useRouter } from 'vue-router'
-    import { login } from '@/apis/user'
+    import { login,getMyInfo } from '@/apis/user'
     import { useUserStore } from '@/stores/user'
 
     const router = useRouter()  
@@ -18,12 +18,11 @@
         ]
     }
 
-    // // 全局数据存储
-    // const usert = useUsertStore();
+    // 全局数据存储
+    const user = useUserStore();
 
     // 登录表单校验
     const loginForm = ref(null)
-    const user = useUserStore()
     const resCheck = ()=>{
         loginForm.value.validate(async (valid) => {
         if (valid) {
@@ -33,10 +32,12 @@
             // if(res.code == 0){
             //     ElMessage({ type: 'error', message: res.msg })
             // }else if(res.code==1){
-                console.log("hhhh"+JSON.stringify(res));
-                // user.token = res.data.token;
-                // ElMessage({ type: 'success', message: res.msg })
-                // router.push("/home").catch(err=>console.error(err));
+            //     console.log("hhhh"+JSON.stringify(res));
+                user.token = res.token;
+                const info = await getMyInfo(user.token);
+                user.myinfo = info.data;
+                ElMessage({ type: 'success', message: "登录成功" })
+                router.push("/home").catch(err=>console.error(err));
             // }
         } else {
             return false;

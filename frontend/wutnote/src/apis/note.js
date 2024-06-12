@@ -15,3 +15,6 @@ export function getNotesList(){
 }
 
 // 根据笔记id获取笔记详情
+export function getNoteDetail(id){
+    return httpInstance.get(`/note/${id}/`);
+}

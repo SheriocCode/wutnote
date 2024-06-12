@@ -1,2 +1,2 @@
 /* subpkg/note_detail/note_detail.wxss */
-/* @import './towxml/style/main.wxss'; */
+@import '../../towxml/style/main.wxss';

@@ -1,17 +1,60 @@
 <script setup>
+    import { House, Edit, Avatar } from '@element-plus/icons-vue'
+    import { ref, onMounted } from 'vue'
+    import { useUserStore } from '@/stores/user'
+
+    // 菜单选项激活
+    const activeIndex = ref(1)
+    const handleSelect = (index)=>{
+        activeIndex.value = index;
+    }
+
+    // 全局数据存储
+    const user = useUserStore();
+    onMounted(()=>{
+        const avator = user.myinfo.avator;
+    })
+    
 </script>
 
 <template>
     <div class="index-contanier">
         <el-container class="index-box">
-            <el-header height="5%">
+            <el-header height="10%">
+                <div class="menu-box">
+                    <el-menu class="header-menu" 
+                        mode="horizontal"
+                        :default-active="activeIndex"
+                        @select="handleSelect">
+                        <router-link to="/home">
+                            <el-menu-item index="1">
+                                <el-icon><House /></el-icon>
+                                <template #title><span>首页</span></template>
+                            </el-menu-item>
+                        </router-link>
+                        <router-link to="/create">
+                            <el-menu-item index="2">
+                                <el-icon><Edit /></el-icon>
+                                <template #title>创作中心</template>
+                            </el-menu-item>
+                        </router-link>
+                        <router-link to="/my">
+                            <el-menu-item index="3">
+                                <el-icon><Avatar /></el-icon>
+                                <template #title>个人空间</template>
+                            </el-menu-item>
+                        </router-link>
+                    </el-menu>
+                </div>
                 <el-dropdown>
                     <div class="avatar">
-                        <el-avatar :size="30" :src="circleUrl" />
+                        <el-avatar :size="30" :src="avator" />
                     </div>
                     <template #dropdown>
                         <el-dropdown-menu>
-                            <el-dropdown-item>个人资料</el-dropdown-item>
+                            <router-link to="/my">
+                                <el-dropdown-item>个人资料</el-dropdown-item>
+                            </router-link>
                             <el-dropdown-item>退出登录</el-dropdown-item>
                         </el-dropdown-menu>
                     </template>
@@ -24,7 +67,7 @@
 
 <style lang="scss" scoped>
 .index-contanier{
-    background-color: $border-color;
+    // background-color: $border-color;
     position: absolute;
     top: 0;
     left: 0;
@@ -33,27 +76,20 @@
 }
 .index-box{
     height: 100%;
-    padding: 10px;
 }
 .el-header{
     display: flex;
-    justify-content: flex-end;
-    .el-dropdown{
-        margin-right: 20px;
+    align-items: center;
+    justify-content: center;
+    .menu-box{
+        width: 420px;
+        padding: 0 200px;
+    }
+    .el-menu{
+        border: none;
     }
 }
-.main-box{
-    background-color: #fff;
-    border-radius: 15px;
-    position: relative;
-    height: 100%;
-    .el-aside{
-        border-right:1px solid $border-color;
-        .el-menu{
-            border: none;
-            border-radius: 15px;
-        }
-    }
-    
+.el-dropdown{
+    cursor: pointer;
 }
 </style>
