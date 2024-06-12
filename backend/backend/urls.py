@@ -15,12 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from .views import upload_images
+from .views import upload_images, edit
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('account/',include('account.urls')),
     path('note/',include('note.urls')),
 
-    path('upload/img/',upload_images)
+    path('upload/img/',upload_images), # 上传图片
+    path('edit/',edit), # 新建笔记
+
+
 ]

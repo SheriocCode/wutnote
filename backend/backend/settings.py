@@ -13,6 +13,9 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
+# .env配置环境变量
+from dotenv import load_dotenv
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -141,3 +144,9 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_ROOT = os.path.join(BASE_DIR.parent,'storage/')
+
+# 腾讯云cos配置
+TENCENT_CLOUD_REGION = os.getenv('TENCENT_CLOUD_REGION')
+TENCENT_CLOUD_SECRET_ID = os.getenv('TENCENT_CLOUD_SECRET_ID')
+TENCENT_CLOUD_SECRET_KEY = os.getenv('TENCENT_CLOUD_SECRET_KEY')
+TENCENT_CLOUD_BUCKET = os.getenv('TENCENT_CLOUD_BUCKET')
