@@ -43,21 +43,6 @@
         },
         isActive: () => props.editor.isActive('bold')
     },{
-        icon:'icon-zitifangda',
-        title:'字号+',
-        action: function(){
-            console.log("字号+")
-            // props.editor.chain().focus().extendMarkRange('textStyle', { fontSize: 'increase' }).run();
-        },
-    },{
-        icon:'icon-zitisuoxiao',
-        title:'字号-',
-        action: function(){
-            console.log("字号-")
-            props.editor.chain().focus().toggleBold().run()
-        },
-        isActive: () => props.editor.isActive('bold')
-    },{
         icon:'icon-h-1',
         title:'一级标题',
         action: function(){
@@ -113,6 +98,13 @@
             props.editor.chain().focus().toggleOrderedList().run()
         },
         isActive: () => props.editor.isActive('orderedList')
+      },{
+        icon: 'icon-code',
+        title: '代码块',
+        action: function(){
+            props.editor.chain().focus().toggleCodeBlock().run()
+        },
+        isActive: () => props.editor.isActive('blockquote')
       },{
         icon: 'icon-quote',
         title: '引用块',
@@ -214,9 +206,10 @@
 
 <style lang="scss" scoped>
 .bar-container{
+    margin-top: 10px;
     display: flex;
     justify-content: center;
-    background-color: $menubar-bgcolor;
+    background-color: $theme-color;
     border-bottom: 1px solid $border-color;
 }
 .bar-box{
@@ -227,10 +220,10 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        color: #555666;
+        color: $theme-text;
         cursor: pointer;
         i{
-            font-size: 22px;
+            font-size: 20px;
         }
         p{
             font-size: 12px; 

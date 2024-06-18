@@ -7,7 +7,22 @@ a{
     color: initial; /* 覆盖激活时的颜色 */
     text-decoration: none;
 }
-$border-color:#EBEBEB;  //边框线
+body::-webkit-scrollbar {
+    display: none;
+}
+input{
+    outline: none;
+    background-color: #282828;
+    border: none;
+    color:#DCDCDC;
+}
+
+$theme-color:#0C0C0C;
+$theme-active:#DCFF07;
+$low-theme-color:#282828;
+$theme-text:#DCDCDC;
+
+$border-color:#303030;  //边框线
 $text-color:#B4B4B4;  //文字
 $menubar-bgcolor:#F5F5F5;
 $active-color:#CDCDCD;

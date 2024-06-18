@@ -7,6 +7,8 @@
     const activeIndex = ref(1)
     const handleSelect = (index)=>{
         activeIndex.value = index;
+        // const select = document.getElementsByClassName('el-menu-item')[index];
+        // select.style.borderbottom = '1px solid #fff'
     }
 
     // 全局数据存储
@@ -20,14 +22,14 @@
 <template>
     <div class="index-contanier">
         <el-container class="index-box">
-            <el-header height="10%">
+            <el-header height="60px">
                 <div class="menu-box">
                     <el-menu class="header-menu" 
                         mode="horizontal"
                         :default-active="activeIndex"
                         @select="handleSelect">
                         <router-link to="/home">
-                            <el-menu-item index="1">
+                            <el-menu-item index="1" :class="{ active: activeIndex === index }">
                                 <el-icon><House /></el-icon>
                                 <template #title><span>首页</span></template>
                             </el-menu-item>
@@ -81,12 +83,24 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: $theme-color;
+    padding: 10px 0;
     .menu-box{
         width: 420px;
         padding: 0 200px;
     }
     .el-menu{
         border: none;
+        background-color: $theme-color;
+        .el-menu-item{
+            color:$theme-text;
+        }
+        .router-link-active{
+            border-bottom:2px solid $theme-active;
+            font-weight: bold;
+        }
+        
+            
     }
 }
 .el-dropdown{

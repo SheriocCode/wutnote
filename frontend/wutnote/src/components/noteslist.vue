@@ -90,7 +90,8 @@
     cursor: pointer;
     .title{
         padding: 10px 0;
-        font-weight: bold;
+        // font-weight: bold;
+        color: $theme-text;
         font-size: 18px;
     }
     .abstract{

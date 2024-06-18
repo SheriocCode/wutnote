@@ -12,38 +12,57 @@
     import Document from "@tiptap/extension-document"
     import Highlight from '@tiptap/extension-highlight'
     import Image from '@tiptap/extension-image'
+    import HeadingExtension from '@tiptap/extension-heading'
+
+    // import CodeBlock from '@tiptap/extension-code-block'
+    // import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
+    // import lowlight from 'lowlight'
+    // import javascript from 'lowlight/lib/languages/javascript'
+
     import Table from '@tiptap/extension-table'
     import TableRow from '@tiptap/extension-table-row'
     import TableCell from '@tiptap/extension-table-cell'
     import TableHeader from '@tiptap/extension-table-header'
 
-const CustomTableCell = TableCell.extend({
-  addAttributes() {
-    return {
-      // 展开现有属性,?.是可选链操作符,可以自行百度(懂的大佬当我没说)
-      ...this.parent?.(),
+    const CustomTableCell = TableCell.extend({
+    addAttributes() {
+        return {
+        // 展开现有属性,?.是可选链操作符,可以自行百度(懂的大佬当我没说)
+        ...this.parent?.(),
 
-      // 添加新的属性
-      backgroundColor: {
-        default: null,
-        parseHTML: (element) => element.getAttribute('data-background-color'),
-        renderHTML: (attributes) => ({
-          'data-background-color': attributes.backgroundColor,
-          style: `background-color: ${attributes.backgroundColor}`
-        })
-      }
+        // 添加新的属性
+        backgroundColor: {
+            default: null,
+            parseHTML: (element) => element.getAttribute('data-background-color'),
+            renderHTML: (attributes) => ({
+            'data-background-color': attributes.backgroundColor,
+            style: `background-color: ${attributes.backgroundColor}`
+            })
+        }
+        }
     }
-  }
-})
+    })
+    // lowlight.registerLanguage('javascript', javascript)
 
-   
-
+// const CodeBlockExtension = CodeBlock.extend({
+//   addOptions() {
+//     return {
+//       highlight: highlight,
+//     };
+//   },
+// });
     const editor = useEditor({
+        content: `<h1>Heading 1</h1><p>Some content here...</p><h2>Heading 2</h2><p>Some more content here...</p>`,
         extensions:[
             Document,
             StarterKit,
             Image,
+            // CodeBlock,
+            // CodeBlockLowlight.configure({
+            //     lowlight,
+            // }),
             Highlight.configure({multicolor:true}),
+            HeadingExtension.configure({levels:[1,2,3]}),
             Table.configure({
                 resizable:true
             }),
@@ -74,6 +93,12 @@ const CustomTableCell = TableCell.extend({
             }
         }
     }
+
+    // 笔记目录生成
+    const tableOfContents = ref([]);
+    const generateContents = () => {
+ 
+    };
 
     // 控制笔记保存信息的提交
     const noteDialogShow = ref(false)
@@ -119,131 +144,151 @@ const CustomTableCell = TableCell.extend({
       });
     }
     // 取消提交
-    const handelCancel = () =>{
-        noteForm.tags = '';
-        noteDialogShow.value = false;
-    }
+    // const handelCancel = () =>{
+    //     noteForm.tags = '';
+    //     noteDialogShow.value = false;
+    // }
 </script>
 
 <template>
     <div class="create-container">
-        <div class="top-container">
-            <router-link to="/home" class="back-box">
-                <div class="back">
-                    <el-icon><Back /></el-icon>返回
-                </div>
-            </router-link>
-            <el-button @click="noteDialogShow = true" round>保存笔记</el-button>
-        </div>
         <MenuBar :editor="editor"/>
         <div class="editor-contanier">
             <el-scrollbar class="editor-box" style="height: 100%;">
                 <div class="scroll-content">
                     <!-- <textarea class="title-input" placeholder="请输入标题"></textarea> -->
-                    <editor-content id="editor" :editor="editor"  @paste="handelPaste"/>
+                    <editor-content id="editor" :editor="editor"  @paste="handelPaste" style="color:#DCDCDC;"/>
                 </div>
             </el-scrollbar> 
+        </div>
+        <div class="save-container">
+            <div class="save-box">
+                <div class="top-box">
+                    <p>笔记设置</p>
+                    <el-button @click="noteFormCheck">保存笔记</el-button>
+                    
+                </div>
+                <div class="bottom-box">
+                    <div class="note-container">
+                        <el-form v-model="noteForm" ref="noteFormRef" class="note-box" >
+                            <el-form-item prop="title" label="标题：">
+                                <input v-model="noteForm.title" style="width: 240px"/>
+                            </el-form-item>
+                            <el-form-item prop="tags" label="标签：">
+                            <div class="addtags-box">
+                                <input
+                                    v-if="inputVisible"
+                                    v-model="tagIput"
+                                    @keyup.enter="handleInputConfirm"/>
+                                <el-button v-else class="button-new-tag" @click="showInput">
+                                + 添加标签
+                                </el-button>
+                                <div class="tags-box">
+                                    <el-tag
+                                        v-model="noteForm.tags"
+                                        v-for="tag in noteForm.tags"
+                                        :key="tag"
+                                        closable
+                                        @close="handleClose(tag)">
+                                        {{ tag }}
+                                    </el-tag>
+                                </div>
+                            </div>
+                            </el-form-item>
+                            <el-form-item prop="abstact" label="摘要：">
+                                <textarea v-model="noteForm.abstact"
+                                        placeholder="请输入对笔记内容的概述" 
+                                        cols="10"/>
+                            </el-form-item>
+                        </el-form>
+                    </div>
+                </div>
+            </div> 
         </div>
     </div> 
 
     <!-- 笔记保存表单 -->
-    <el-dialog 
+    <!-- <el-dialog 
         v-model="noteDialogShow" 
         title="笔记保存" 
         width="400" align-center>
-        <div class="note-container">
-            <el-form v-model="noteForm" ref="noteFormRef" class="note-box" >
-                <el-form-item prop="title" label="标题：">
-                    <el-input v-model="noteForm.title" style="width: 240px"/>
-                </el-form-item>
-                <el-form-item prop="abstact" label="摘要：">
-                    <el-input v-model="noteForm.abstact" style="width: 240px"/>
-                </el-form-item>
-                <el-form-item prop="tags" label="标签：">
-                    <div class="addtags-box">
-                        <el-input
-                            v-if="inputVisible"
-                            v-model="tagIput"
-                            @keyup.enter="handleInputConfirm"/>
-                        <el-button v-else class="button-new-tag" @click="showInput">
-                        + 添加标签
-                        </el-button>
-                        <div class="tags-box">
-                            <el-tag
-                                v-model="noteForm.tags"
-                                v-for="tag in noteForm.tags"
-                                :key="tag"
-                                closable
-                                @close="handleClose(tag)">
-                                {{ tag }}
-                            </el-tag>
-                        </div>
-                    </div>
-                </el-form-item>
-            </el-form>
-        </div>
+        
         <div class="button-box">
             <el-button @click="handelCancel">取消</el-button>
             <el-button type="primary" @click="noteFormCheck">保存</el-button>
         </div>
-    </el-dialog> 
+    </el-dialog>  -->
 </template>
 
 <style lang="scss" scoped>
 .create-container{
-    background-color: $menubar-bgcolor;
-    height: 100vh;
-}
-.top-container{
-    background-color: #fff;
-    border-bottom: 1px solid $border-color;
-    padding: 10px 20px;
+    background-color: $theme-color;
     display: flex;
-    justify-content: space-between;
-    .back-box{
-        display: flex;
-        justify-content: center;
-        .back{
-            display: flex;
-            align-items: center;
-        }
-        .el-icon{
-            font-size: 22px;
-            margin-right: 10px;
-        }
-    }
+    flex-direction: column;
 }
+
 .editor-contanier{
-    height: 75%;
+    height: 500px;
     display: flex;
     justify-content: center;
     padding: 30px;
 }
-.editor-box{
+.editor-box{                                  
     width: 800px;
     padding: 20px 50px;
-    background-color: #fff;
+    background-color: $low-theme-color;
     border-radius: 15px;
     .scroll-content {
         width: 100%;
         overflow-x: hidden;
     }
-    
-    .title-input{
-        border: none;
-        resize: none;
-        outline: none;
-        width: 100%;
-        font-size: 25px;
-        border-bottom: 1px solid $border-color;
-    }
 }
 
 
-// 表单提交
-.note-container{
+.save-container{
     display: flex;
     justify-content: center;
+    margin: 20px 0;
+    .save-box{
+        width: 850px;
+        // padding: 15px;
+        background-color: $theme-color;
+        border: 2px solid $border-color;
+        // background-color: pink;
+        color: $theme-text;
+        .top-box{
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid $border-color;
+            p{
+                font-size: 16px;
+            }
+        }
+    }
+}
+.el-button{
+    background-color: $theme-active;
+    color: $theme-color;
+    border: none;
+}
+.bottom-box{
+    padding: 0 50px;
+    .addtags-box{
+        .el-tag{
+            background-color: $low-theme-color;
+            color: $theme-text;
+            border: none;
+        }
+    }
+}
+.note-container{
+    display: flex;
+    input{
+        height: 28px;
+        border-radius: 5px;
+    }
 }
 .note-box{
     .el-form-item{
@@ -256,11 +301,19 @@ const CustomTableCell = TableCell.extend({
             margin-top: 10px;
         }
     }
+    textarea{
+        resize: none;
+        width: 500px;
+        height: 250px;
+        outline: none;
+        background-color: #282828;
+        border: none;
+        color:#DCDCDC;
+        font-size: 16px;
+        padding: 10px;
+    }
 }
-.button-box{
-    display: flex;
-    justify-content: end;
-}
+
 </style>
 <style lang="scss">
 .tiptap,.ProseMirror-focused {
@@ -281,7 +334,7 @@ const CustomTableCell = TableCell.extend({
 .tiptap p:hover{
     // margin-top: 10px;
     padding-left: 6px;
-    border-left: 4px solid $border-color;
+    border-left: 4px solid $theme-active;
 }
 blockquote{
     margin: 16px 0;
@@ -310,5 +363,10 @@ blockquote{
 /* 设置表头颜色 */
 .ProseMirror table th {
   background-color: #f0f0f0; /* 表头背景颜色 */
+}
+</style>
+<style lang="scss">
+.el-form-item__label {
+  color: $theme-text;
 }
 </style>

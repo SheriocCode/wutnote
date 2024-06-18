@@ -26,10 +26,11 @@
 
 <template>
     <el-container class="main-container">
-        <el-main class="main-box">
+        <div class="main-box">
             <div class="my-box">
                 <div class="info-box">
-                    <img :src="userInfo.avator" alt="">
+                    <!-- <img :src="userInfo.avator" alt=""> -->
+                    <img src="@/assets/image.png" alt="">
                     <div>
                         <div class="author">{{userInfo.nickname}}</div>
                         <div class="sign">{{userInfo.signature}}</div>
@@ -50,8 +51,7 @@
                     </el-tabs>
                 </div>
             </div>
-            
-        </el-main>
+        </div>
     </el-container>
 </template>
 
@@ -59,6 +59,7 @@
 .main-container{
     display: flex;
     justify-content: center;
+    background-color: $theme-color;
 }
 .main-box{
     display: flex;
@@ -68,6 +69,10 @@
     width: 800px;
     display: flex;
     flex-direction: column;
+    padding: 30px;
+    border-radius: 8px;
+    background-color: #141414;
+    border: 2px solid $border-color;
     .info-box{
         display: flex;
         align-items: center;
@@ -78,6 +83,7 @@
         }
         .author{
             font-weight: bold;
+            color: $text-color;
         }
         .sign{
             margin-top: 10px;
@@ -91,5 +97,10 @@
            margin-left: 50px;
         }
     }
+}
+</style>
+<style lang="scss">
+.el-tabs__item.is-active {
+    color: $theme-active;
 }
 </style>
