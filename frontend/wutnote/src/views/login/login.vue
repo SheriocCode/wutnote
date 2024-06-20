@@ -28,8 +28,7 @@
         if (valid) {
             const res = await login(form);
             loginForm.value.resetFields();
-            user.token = res.data.token;
-            console.log("token:"+user.token);
+            user.token = res.token;
             const info = await getMyInfo(user.token);
             user.myinfo = info.data;
             ElMessage({ type: 'success', message: "登录成功" })

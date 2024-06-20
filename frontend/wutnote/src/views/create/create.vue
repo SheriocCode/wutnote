@@ -108,6 +108,15 @@
         content:"",
         tags:[]
     })
+     const rules = {
+        "title":[
+            { required: true, message: '标题不能为空' }
+        ],
+        "abstract":[
+            { required: true, message: '摘要不能为空' }
+    ]}
+
+
     const tagIput = ref('')
     const inputVisible = ref(false)
     const showInput = () =>{
@@ -128,15 +137,18 @@
 
 
     // 提交表单
+    const user = useUserStore()
     const noteFormRef = ref(null)
     const noteFormCheck = ()=>{
-        resForm.value.validate(async (valid) => {
-        if (valid) {  
-            // 获取编辑器里面的内容
-            noteForm.content = editor.value.getHTML();       
-            await addNote(noteForm);                                        
-            noteFormRef.value.resetFields();
-        }
+        noteFormRef.value.validate(async (valid) => {
+            console.log("1111111");
+            if (valid) {  
+                console.log("hhhhhh");
+                // 获取编辑器里面的内容
+                noteForm.content = editor.value.getHTML();       
+                await addNote(noteForm,user.token);                                        
+                noteFormRef.value.resetFields();
+            }
       });
     }
     // 取消提交
@@ -162,12 +174,11 @@
                 <div class="top-box">
                     <p>笔记设置</p>
                     <el-button @click="noteFormCheck">保存笔记</el-button>
-                    
                 </div>
                 <div class="bottom-box">
                     <div class="note-container">
-                        <el-form v-model="noteForm" ref="noteFormRef" class="note-box" >
-                            <el-form-item prop="title" label="标题：">
+                        <el-form :model="noteForm" ref="noteFormRef" class="note-box" >
+                            <el-form-item prop="title" label="标题：" :rules="rules.title">
                                 <input v-model="noteForm.title" style="width: 240px"/>
                             </el-form-item>
                             <el-form-item prop="tags" label="标签：">
@@ -191,8 +202,8 @@
                                 </div>
                             </div>
                             </el-form-item>
-                            <el-form-item prop="abstact" label="摘要：">
-                                <textarea v-model="noteForm.abstact"
+                            <el-form-item prop="abstract" label="摘要：" :rules="rules.abstract">
+                                <textarea v-model="noteForm.abstract"
                                         placeholder="请输入对笔记内容的概述" 
                                         cols="10"/>
                             </el-form-item>

@@ -117,9 +117,9 @@
     ])
 
     // 图片上传样式
-    const imgItem = eactive({
-        icon:'icon-biaodanzujian-biaoge',
-        title:'表格',
+    const imgItem = reactive({
+        icon:'icon-charutupian',
+        title:'图片',
         action: function(){
             
         }
@@ -199,8 +199,9 @@
             </div>
             <el-dropdown trigger="click">
                 <div class="icon-item">
-                    <i :class="[tableItems.icon,'iconfont']"></i>
-                    <p style="margin-top:2px;">{{tableItems.title}}</p>
+                    <i :class="[tableItems.icon,'iconfont']"
+                        style="margin-bottom:5px;"></i>
+                    <p >{{tableItems.title}}</p>
                 </div>
                 <template #dropdown>
                 <el-dropdown-menu>

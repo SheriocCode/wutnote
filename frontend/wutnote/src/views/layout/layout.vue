@@ -127,4 +127,9 @@
 .el-dropdown{
     cursor: pointer;
 }
+@media(max-width:900px){
+    .index-contanier{
+        width: 900px;
+    }
+}
 </style>

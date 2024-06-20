@@ -33,20 +33,20 @@
                         <div class="right-item">
                             <div class="item">
                                 <i class="iconfont icon-liulan4"></i>
-                                {{create_time.browse_num}}
+                                {{noteInfo.browse_num}}
                             </div>
                             <div class="item">
                                 <i class="iconfont icon-shoucang"></i>
-                                {{create_time.collect_num}}
+                                {{noteInfo.collect_num}}
                             </div>
                             <div class="item">
                                 <i class="iconfont icon-xihuan"></i>
-                                {{create_time.like_num}}
+                                {{noteInfo.like_num}}
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="content" v-html="htmlContent">
+                <div class="content" v-html="noteInfo.content">
 
                 </div>
             </div>

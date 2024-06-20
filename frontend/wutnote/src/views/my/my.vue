@@ -1,6 +1,6 @@
 <script setup>
     import { ref,onMounted } from 'vue'
-    // import { useUserStore } from '@/stores/user'
+    import { useUserStore } from '@/stores/user'
     import noteslistVue from "@/components/noteslist.vue"
     import columnslistVue from "@/components/columnslist.vue"
     import { getMyNotes, getMyColumns, getMyConcerns, getMyFavors} from '@/apis/user'

@@ -17,12 +17,16 @@ export function handelImageFile(file){
 }
 
 // 添加笔记
-export function addNote(form){
+export function addNote(form,token){
     return httpInstance.post('/edit/',{
         title:form.title,
         abstract:form.abstract,
         content:form.content,
-        tags:form.tags
+        tags:[]
+    },{
+        headers:{
+            'Authorization': `Bearer ${token}`
+        }
     }).then(res=>{
         return res.data
     }).catch(err=>{

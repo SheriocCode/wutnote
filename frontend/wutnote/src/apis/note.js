@@ -7,7 +7,7 @@ export function getNotesList(){
         method: 'get',
         url: '/note/notelist/'
     }).then(res=>{
-        return res.data
+        return res.data.data
     }).catch(err=>{
         ElMessage.error('获取出错！')
     })
@@ -17,7 +17,7 @@ export function getNotesList(){
 export function getNoteDetail(id){
     return httpInstance.get(`/note/${id}/`)
         .then(res=>{
-            return res.data;
+            return res.data.data;
         }).catch(err=>{
             ElMessage.error('获取出错！')
         })

@@ -3,6 +3,7 @@ import { ElMessage } from 'element-plus'
 
 // 登录
 export function login(form){
+    console.log(form.name+"hhhh"+form.pass);
     return httpInstance.post('/account/login/',{
             username:form.name,
             password:form.pass
@@ -12,7 +13,7 @@ export function login(form){
             'Content-Type': 'application/x-www-form-urlencoded'
         }
     }).then(res=>{
-        // return res.data
+        return res.data
     }).catch(err=>{
         ElMessage.error('获取出错！')
     })
