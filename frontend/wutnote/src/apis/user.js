@@ -1,4 +1,5 @@
 import httpInstance from "@/utils/utils"
+import { ElMessage } from 'element-plus'
 
 // 登录
 export function login(form){
@@ -10,9 +11,10 @@ export function login(form){
         headers:{
             'Content-Type': 'application/x-www-form-urlencoded'
         }
-    }).then(res =>{
-        console.log('Logining successfully');
-        return res.data;
+    }).then(res=>{
+        // return res.data
+    }).catch(err=>{
+        ElMessage.error('获取出错！')
     })
 }
 
@@ -22,6 +24,10 @@ export function getMyInfo(token){
         headers:{
             'Authorization': `Bearer ${token}`
         }
+    }).then(res=>{
+        return res.data
+    }).catch(err=>{
+        ElMessage.error('获取出错！')
     })
 }
 
@@ -31,6 +37,10 @@ export function getMyNotes(token){
         headers:{
             'Authorization': `Bearer ${token}`
         }
+    }).then(res=>{
+        return res.data
+    }).catch(err=>{
+        ElMessage.error('获取出错！')
     })
 }
 
@@ -40,6 +50,10 @@ export function getMyColumns(token){
         headers:{
             'Authorization': `Bearer ${token}`
         }
+    }).then(res=>{
+        return res.data
+    }).catch(err=>{
+        ElMessage.error('获取出错！')
     })
 }
 
@@ -49,6 +63,10 @@ export function getMyConcerns(token){
         headers:{
             'Authorization': `Bearer ${token}`
         }
+    }).then(res=>{
+        return res.data
+    }).catch(err=>{
+        ElMessage.error('获取出错！')
     })
 }
 
@@ -58,5 +76,9 @@ export function getMyFavors(token){
         headers:{
             'Authorization': `Bearer ${token}`
         }
+    }).then(res=>{
+        return res.data
+    }).catch(err=>{
+        ElMessage.error('获取出错！')
     })
 }

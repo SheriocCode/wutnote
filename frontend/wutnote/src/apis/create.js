@@ -1,4 +1,5 @@
 import httpInstance from "@/utils/utils"
+import { ElMessage } from 'element-plus'
 
 // 处理上传的图片
 export function handelImageFile(file){
@@ -8,22 +9,23 @@ export function handelImageFile(file){
         headers:{
             'Content-Type': 'application/x-www-form-urlencoded'
         }
-    }).then(res => {
-        console.log("Upload img successfullly:",res);
-    }).catch(error => {
-        console.error('Error uploading image:', error);
-    });
+    }).then(res=>{
+        return res.data
+    }).catch(err=>{
+        ElMessage.error('上传出错！')
+    })
 }
 
 // 添加笔记
 export function addNote(form){
-    return httpInstance.post('/edit',form,{
-        headers:{
-            'Content-Type': 'application/x-www-form-urlencoded'
-        }
-    }).then(res => {
-        console.log("Add note successfullly:",res);
-    }).catch(error => {
-        console.error('Error adding note:', error);
-    });
+    return httpInstance.post('/edit/',{
+        title:form.title,
+        abstract:form.abstract,
+        content:form.content,
+        tags:form.tags
+    }).then(res=>{
+        return res.data
+    }).catch(err=>{
+        ElMessage.error('上传失败！')
+    })
 }

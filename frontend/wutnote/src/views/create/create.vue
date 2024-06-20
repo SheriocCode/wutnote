@@ -135,11 +135,7 @@
             // 获取编辑器里面的内容
             noteForm.content = editor.value.getHTML();       
             await addNote(noteForm);                                        
-            ElMessage({ type: 'success', message: '上传成功' })
             noteFormRef.value.resetFields();
-        } else {
-            console.log('上传失败!');
-            return false;
         }
       });
     }
@@ -364,9 +360,14 @@ blockquote{
 .ProseMirror table th {
   background-color: #f0f0f0; /* 表头背景颜色 */
 }
-</style>
-<style lang="scss">
+
 .el-form-item__label {
   color: $theme-text;
 }
+blockquote{
+  border-left: 3px solid $theme-color; /* 引用块左边的线 */
+  color: $text-color; /* 文字颜色 */
+  background-color: $theme-color; /* 背景色 */
+}
+
 </style>

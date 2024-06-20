@@ -2,6 +2,7 @@
     import { House, Edit, Avatar } from '@element-plus/icons-vue'
     import { ref, onMounted } from 'vue'
     import { useUserStore } from '@/stores/user'
+    import { useRouter } from 'vue-router'
 
     // 菜单选项激活
     const activeIndex = ref(1)
@@ -16,6 +17,14 @@
     onMounted(()=>{
         const avator = user.myinfo.avator;
     })
+
+    // 退出登录
+    const router = useRouter()
+    const exit = ()=>{
+        user.token=''
+        user.myinfo = null
+        router.push('/login') 
+    }
     
 </script>
 
@@ -24,40 +33,43 @@
         <el-container class="index-box">
             <el-header height="60px">
                 <div class="menu-box">
-                    <el-menu class="header-menu" 
-                        mode="horizontal"
-                        :default-active="activeIndex"
-                        @select="handleSelect">
+                    <div class="header-menu">
                         <router-link to="/home">
-                            <el-menu-item index="1" :class="{ active: activeIndex === index }">
+                            <div :class="['menu-item',{ active: activeIndex === 1 }]"
+                                @click="handleSelect(1)">
                                 <el-icon><House /></el-icon>
-                                <template #title><span>首页</span></template>
-                            </el-menu-item>
+                                <span>首页</span>
+                            </div>
                         </router-link>
                         <router-link to="/create">
-                            <el-menu-item index="2">
+                             <div :class="['menu-item',{ active: activeIndex === 2 }]"
+                                @click="handleSelect(2)">
                                 <el-icon><Edit /></el-icon>
-                                <template #title>创作中心</template>
-                            </el-menu-item>
+                                <span>创作中心</span>
+                            </div>
                         </router-link>
                         <router-link to="/my">
-                            <el-menu-item index="3">
+                             <div :class="['menu-item',{ active: activeIndex === 3 }]"
+                                @click="handleSelect(3)">
                                 <el-icon><Avatar /></el-icon>
-                                <template #title>个人空间</template>
-                            </el-menu-item>
+                                <span>个人空间</span>
+                            </div>
                         </router-link>
-                    </el-menu>
+                    </div>
                 </div>
                 <el-dropdown>
-                    <div class="avatar">
-                        <el-avatar :size="30" :src="avator" />
+                    <div class="avatar" v-if="user.token">
+                        <el-avatar :size="30" :src="user.myinfo.avator" />
+                    </div>
+                    <div v-else>
+                        <button class="login-button" @click="router.push('/login')">登录</button>
                     </div>
                     <template #dropdown>
                         <el-dropdown-menu>
                             <router-link to="/my">
                                 <el-dropdown-item>个人资料</el-dropdown-item>
                             </router-link>
-                            <el-dropdown-item>退出登录</el-dropdown-item>
+                            <el-dropdown-item @click="exit()">退出登录</el-dropdown-item>
                         </el-dropdown-menu>
                     </template>
                 </el-dropdown>
@@ -84,24 +96,33 @@
     align-items: center;
     justify-content: center;
     background-color: $theme-color;
-    padding: 10px 0;
     .menu-box{
-        width: 420px;
-        padding: 0 200px;
+        padding: 0 250px;
     }
-    .el-menu{
+    .header-menu{
         border: none;
-        background-color: $theme-color;
-        .el-menu-item{
+        display: flex;
+        justify-content: space-around;
+        .menu-item{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px 10px;
+            margin: 0 10px;
             color:$theme-text;
         }
-        .router-link-active{
+        .active{
             border-bottom:2px solid $theme-active;
             font-weight: bold;
         }
-        
-            
+       
     }
+}
+.login-button{
+    border: none;
+    background-color: $theme-active;
+    padding: 5px 20px;
+    border-radius: 10px;
 }
 .el-dropdown{
     cursor: pointer;

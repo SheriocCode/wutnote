@@ -6,22 +6,26 @@
     import { getMyNotes, getMyColumns, getMyConcerns, getMyFavors} from '@/apis/user'
 
     // 全局数据存储
-    // const user = useUserStore();
+    const user = useUserStore();
 
-    const userInfo = ref({
-        nickname: "zhangjie",
-        avator:null,
-        signature: "这个人很懒，什么都没有留下......"
-    })
-    // const userInfo = ref({})
-
-    // onMounted(async ()=>{
-    //     userInfo.value = user.myinfo;
-    //     const mynotes = (await getMyNotes(user.token)).data.records;
-    //     const mycolumns = (await getMyColumns(user.token)).data.records;
-    //     const myconcerns = (await getMyConcerns(user.token)).data.records;
-    //     const myfavors = (await getMyFavors(user.token)).data.records;
+    // const userInfo = ref({
+    //     nickname: "zhangjie",
+    //     avator:null,
+    //     signature: "这个人很懒，什么都没有留下......"
     // })
+    const userInfo = ref({})
+
+    const mynotes = ref({})
+    const mycolumns = ref({})
+    const myconcerns = ref({})
+     const myfavors = ref({})
+    onMounted(async ()=>{
+        userInfo.value = user.myinfo;
+        mynotes.value = (await getMyNotes(user.token)).data.records;
+        mycolumns.value = (await getMyColumns(user.token)).data.records;
+        myconcerns.value = (await getMyConcerns(user.token)).data.records;
+        myfavors.value = (await getMyFavors(user.token)).data.records;
+    })
 </script>
 
 <template>
@@ -29,8 +33,8 @@
         <div class="main-box">
             <div class="my-box">
                 <div class="info-box">
-                    <!-- <img :src="userInfo.avator" alt=""> -->
-                    <img src="@/assets/image.png" alt="">
+                    <img :src="userInfo.avator" alt="">
+                    <!-- <img src="@/assets/image.png" alt=""> -->
                     <div>
                         <div class="author">{{userInfo.nickname}}</div>
                         <div class="sign">{{userInfo.signature}}</div>
@@ -39,14 +43,14 @@
                 <div class="menu-box">
                     <el-tabs tab-position="left"  class="tabs-box">
                         <el-tab-pane label="笔记">
-                            <noteslistVue :noteslist="mynotes"/>
+                            <noteslistVue :notesList="mynotes"/>
                         </el-tab-pane>
                         <el-tab-pane label="专栏">
                             <columnslistVue :columnslist="mycolumns"/>
                         </el-tab-pane>
                         <el-tab-pane label="关注"></el-tab-pane>
                         <el-tab-pane label="收藏">
-                            <noteslistVue :noteslist="myfavors"/>
+                            <noteslistVue :notesList="myfavors"/>
                         </el-tab-pane>
                     </el-tabs>
                 </div>
@@ -66,6 +70,7 @@
     justify-content: center;
 }
 .my-box{
+    margin-top: 20px;
     width: 800px;
     display: flex;
     flex-direction: column;
@@ -102,5 +107,14 @@
 <style lang="scss">
 .el-tabs__item.is-active {
     color: $theme-active;
+}
+.el-tabs__item{
+    color: $text-color;
+}
+.el-tabs__item:hover{
+    color: $theme-active;
+}
+.el-tabs__active-bar{
+    background-color: $theme-active;
 }
 </style>
