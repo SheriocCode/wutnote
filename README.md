@@ -19,7 +19,10 @@ pip list
 pip install Django
 pip install djangorestframework-simplejwt
 pip install pymysql
-pip install python-dotenv # 腾讯云
+pip install django-cors-headers
+pip install python-dotenv
+pip install cos-python-sdk-v5 # 腾讯云
+
 ```
 
 ### 数据库配置
@@ -38,17 +41,27 @@ DATABASES = {
 }
 ```
 
-环境变量
+### 环境变量
 
 ```python
 > .env环境变量
+# @ 密钥配置
+SECRET_KEY = 'django-insecure-yoursecretkey'
+
 # @ 腾讯云cos
 TENCENT_CLOUD_REGION=your_region
 TENCENT_CLOUD_SECRET_ID=your_secret_id
 TENCENT_CLOUD_SECRET_KEY=your_secret_key
 TENCENT_CLOUD_BUCKET=your_bucket_name 
 
-# @ 密钥配置
-SECRET_KEY = 'django-insecure-yoursecretkey'
+# @ 腾讯元器api
+TECENT_YUANQI_URL
+TENCENT_YUANQI_TOKEN
+
+# @支付宝沙箱配置
+ALIPAY_SERVER_URL
+ALIPAY_APP_ID
+ALIPAY_APP_PRIVATE_KEY
+ALIPAY_PUBLIC_KEY
 ```
 
