@@ -28,12 +28,12 @@
         if (valid) {
             const res = await login(form);
             loginForm.value.resetFields();
-            user.token = res.token;
+            user.token = res.data.token;
+            console.log("token:"+user.token);
             const info = await getMyInfo(user.token);
             user.myinfo = info.data;
             ElMessage({ type: 'success', message: "登录成功" })
             router.push("/home").catch(err=>console.error(err));
-            // }
         } else {
             return false;
         }
