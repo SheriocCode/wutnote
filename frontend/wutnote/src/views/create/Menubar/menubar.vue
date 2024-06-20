@@ -116,6 +116,15 @@
       }
     ])
 
+    // 图片上传样式
+    const imgItem = eactive({
+        icon:'icon-biaodanzujian-biaoge',
+        title:'表格',
+        action: function(){
+            
+        }
+    })
+
     // 表格样式设置
     const tableItems = reactive({
         icon:'icon-biaodanzujian-biaoge',
@@ -183,6 +192,10 @@
                 @click="activeIcon(item.icon),item.action()">
                 <i :class="[item.icon,'iconfont']"></i>
                 <p>{{item.title}}</p>
+            </div>
+            <div class="icon-item">
+                <i :class="[imgItem.icon,'iconfont']"></i>
+                <p style="margin-top:2px;">{{imgItem.title}}</p>
             </div>
             <el-dropdown trigger="click">
                 <div class="icon-item">
