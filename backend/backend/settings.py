@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-c6ryz$&n3f630wgux$ki3q47@3$_6*j_fgqt04lq%3q2ih3$d4'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -150,3 +150,14 @@ TENCENT_CLOUD_REGION = os.getenv('TENCENT_CLOUD_REGION')
 TENCENT_CLOUD_SECRET_ID = os.getenv('TENCENT_CLOUD_SECRET_ID')
 TENCENT_CLOUD_SECRET_KEY = os.getenv('TENCENT_CLOUD_SECRET_KEY')
 TENCENT_CLOUD_BUCKET = os.getenv('TENCENT_CLOUD_BUCKET')
+
+# 腾讯元器ai智能创作
+TECENT_YUANQI_URL = os.getenv('TECENT_YUANQI_URL')
+TENCENT_YUANQI_TOKEN = os.getenv('TENCENT_YUANQI_TOKEN')
+
+# 支付宝沙箱
+ALIPAY_SERVER_URL = os.getenv('ALIPAY_SERVER_URL')
+ALIPAY_APP_ID = os.getenv('ALIPAY_APP_ID')
+ALIPAY_APP_PRIVATE_KEY = os.getenv('ALIPAY_APP_PRIVATE_KEY')
+ALIPAY_PUBLIC_KEY = os.getenv('ALIPAY_PUBLIC_KEY')
+

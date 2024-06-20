@@ -15,7 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from .views import upload_images, edit
+from .views import upload_images, edit, stream_response, get_hunyuan_response
+
+from django.http import HttpResponse
+from django.conf.urls.static import static
+from django.conf import settings
+import os
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,5 +30,6 @@ urlpatterns = [
     path('upload/img/',upload_images), # 上传图片
     path('edit/',edit), # 新建笔记
 
-
+    path('stream_response/', stream_response, ), # 流式返回数据
+    path('get_hunyuan_response/', get_hunyuan_response, name='get_hunyuan_response'),
 ]
