@@ -28,16 +28,11 @@
         if (valid) {
             const res = await login(form);
             loginForm.value.resetFields();
-            // 存储登录用户信息
-            // if(res.code == 0){
-            //     ElMessage({ type: 'error', message: res.msg })
-            // }else if(res.code==1){
-            //     console.log("hhhh"+JSON.stringify(res));
-                user.token = res.token;
-                const info = await getMyInfo(user.token);
-                user.myinfo = info.data;
-                ElMessage({ type: 'success', message: "登录成功" })
-                router.push("/home").catch(err=>console.error(err));
+            user.token = res.token;
+            const info = await getMyInfo(user.token);
+            user.myinfo = info.data;
+            ElMessage({ type: 'success', message: "登录成功" })
+            router.push("/home").catch(err=>console.error(err));
             // }
         } else {
             return false;
@@ -74,10 +69,10 @@
     position: fixed;
     top: 0;
     left: 0;
-    background-color: #F2F2F2; 
+    background-color: $theme-color; 
 }
 .login-box{
-    background-color: #fff; 
+    background-color: $low-theme-color; 
     border: 1px solid $border-color; 
     text-align: center; 
     display: inline-block;
@@ -85,6 +80,9 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
+    h2{
+        color: #fff;
+    }
 }
 
 .method{
@@ -102,7 +100,9 @@
         margin: 10px 0;
     }
     .el-button{
-        background-color: #8BB250;
+        background-color: $theme-active;
+        color: #000;
+        font-size: 16px;
     }
 }
 

@@ -1,21 +1,21 @@
 <script setup>
     import { ref } from 'vue'
-    // import { defineProps} from 'vue'
+    import { defineProps} from 'vue'
 
-    // const props = defineProps({
-    //     columnslist:Object
-    // })
+    const props = defineProps({
+        columnslist:Object
+    })
 
-    const columnslist = ref([{
-        "column_id": 1,
-        "name": "Java学习专栏",
-        "note_num": 0
-      },
-      {
-        "column_id": 2,
-        "name": "Python学习专栏",
-        "note_num": 0
-      }])
+    // const columnslist = ref([{
+    //     "column_id": 1,
+    //     "name": "Java学习专栏",
+    //     "note_num": 0
+    //   },
+    //   {
+    //     "column_id": 2,
+    //     "name": "Python学习专栏",
+    //     "note_num": 0
+    //   }])
 </script>
 
 <template>
@@ -35,6 +35,9 @@
         padding: 10px 20px;
         margin-bottom: 20px;
         border-bottom: 1px solid $border-color;
+        .name{
+            color: $text-color;
+        }
         .note-num{
             margin-top: 10px;
             font-size: 14px;

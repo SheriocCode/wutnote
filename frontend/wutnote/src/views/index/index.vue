@@ -1,11 +1,18 @@
 <script setup>
     import noteslistVue from "@/components/noteslist.vue"
     import { Search } from '@element-plus/icons-vue'
-    import { ref } from 'vue'
+    import { onMounted, ref } from 'vue'
+    import { getNotesList } from '@/apis/note'
 
     const keyword = ref('')
     const tagslist = ref(["高等数学","大学物理","课程介绍","期末复习","考研","留学","计算机专业课","保研"])
     const tagSelect = ref()
+
+    const notesList = ref({})
+    onMounted(async ()=>{
+        const res = await getNotesList();
+        notesList.value = res.records;
+    })
 </script>
 
 <template>
@@ -25,7 +32,7 @@
                 </div>
                 <div class="right-box">
                     <p>笔记精选</p>
-                    <noteslistVue />
+                    <noteslistVue :notesList="notesList"/>
                 </div>
             </div>
         </div>

@@ -1,49 +1,13 @@
 <script setup>
     import { ref } from 'vue'
     import { useRouter } from 'vue-router'
-    // import { defineProps} from 'vue'
+    import { defineProps} from 'vue'
 
-    // const props = defineProps({
-    //     noteslist:Object
-    // })
+    const props = defineProps({
+        notesList:Object
+    })
 
-    const notesList = ref([{
-        note_id: 2,
-        title: "第二篇文章标题",
-        abstract: "这篇文章是关于现代科技对生活的影响，探讨了科技进步如何改变我们的工作、学习和交流方式。",
-        borwse_num: 10,
-        collect_num: 120,
-        like_num: 85,
-        tags: [
-          {
-            tag_id: 20,
-            tagname: "科技与生活"
-          },
-          {
-            tag_id: 21,
-            tagname: "现代科技"
-          }
-        ]
-      },
-      {
-        note_id: 3,
-        title: "第三篇文章标题",
-        abstract: "本文讨论了环境保护的重要性，分析了当前面临的环境问题，并提出了一些可行的解决方案。",
-        borwse_num: 15,
-        collect_num: 95,
-        like_num: 67,
-        tags: [
-          {
-            tag_id: 30,
-            tagname: "环境保护"
-          },
-          {
-            tag_id: 31,
-            tagname: "可持续发展"
-          }
-        ]
-      }])
-
+   
     const router = useRouter()
     const navToNoteDetail = (id) =>{
       // console.log("id:"+id);
