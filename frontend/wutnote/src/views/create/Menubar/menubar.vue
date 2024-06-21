@@ -1,6 +1,12 @@
 <script setup>
     import { ref, reactive } from 'vue'
     import { defineProps } from 'vue'
+    import { useUserStore } from '@/stores/user'
+    import { handelImageFile} from '@/apis/create'
+    import { ElLoading } from 'element-plus'
+    import { Node } from '@tiptap/core'
+
+    const user = useUserStore()
 
     const props = defineProps({
         editor: {
@@ -10,8 +16,7 @@
     });
     
     // 基础样式设置
-    const items = reactive([
-    {
+    const items = reactive([{
         icon:'icon-chexiao',
         title:'撤销',
         action: function(){
@@ -120,10 +125,34 @@
     const imgItem = reactive({
         icon:'icon-charutupian',
         title:'图片',
-        action: function(){
+        // action: function(){
             
-        }
+        // }
     })
+    const isLoading = ref(false)
+    const fileList = ref([])
+    const res = ref()
+    const uploadImgChange = async (file, fileList) => {
+        // props.editor.commands.insertContent({
+        //     type: 'loading',
+        // });
+        if (file.raw) {
+            const ImgFile = file.raw; // 直接使用file.raw，它是一个File对象
+            res.value = await handelImageFile(ImgFile, user.token);
+            props.editor.chain().focus().setImage({ src: res.url }).run()
+        }
+    }
+    // const LoadingNode = Node.create({
+    //     name: 'loading',
+    //     group: 'inline',
+    //     atom: true,
+    //     selectable: false,
+    //     renderHTML({ node }) {
+    //         return '<p style="color:red">加载中...</p>'; // 使用自定义的 HTML 标签或现有的图标
+    //     },
+    // });
+
+    
 
     // 表格样式设置
     const tableItems = reactive({
@@ -193,10 +222,21 @@
                 <i :class="[item.icon,'iconfont']"></i>
                 <p>{{item.title}}</p>
             </div>
-            <div class="icon-item">
-                <i :class="[imgItem.icon,'iconfont']"></i>
-                <p style="margin-top:2px;">{{imgItem.title}}</p>
-            </div>
+            <!-- 图片上传 -->
+            <el-upload
+                class="upload-img"
+                :show-file-list="false"
+                :limit="1"
+                :auto-upload="false"
+                :on-change="uploadImgChange"
+                :on-success="handleSuccess">
+                    <template #trigger>
+                        <div class="icon-item">
+                            <i :class="[imgItem.icon,'iconfont']"></i>
+                            <p style="margin-top:2px;">{{imgItem.title}}</p>
+                        </div>
+                    </template>
+            </el-upload>
             <el-dropdown trigger="click">
                 <div class="icon-item">
                     <i :class="[tableItems.icon,'iconfont']"

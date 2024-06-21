@@ -2,12 +2,12 @@ import httpInstance from "@/utils/utils"
 import { ElMessage } from 'element-plus'
 
 // 处理上传的图片
-export function handelImageFile(file){
+export function handelImageFile(file,token){
     const formData = new FormData();
     formData.append('img',file);
-    return httpInstance.post('/upload/img',file,{
+    return httpInstance.post('/upload/img/',formData,{
         headers:{
-            'Content-Type': 'application/x-www-form-urlencoded'
+            'Authorization': `Bearer ${token}`
         }
     }).then(res=>{
         return res.data

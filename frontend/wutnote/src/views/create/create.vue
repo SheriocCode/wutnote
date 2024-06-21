@@ -24,23 +24,25 @@
     import TableCell from '@tiptap/extension-table-cell'
     import TableHeader from '@tiptap/extension-table-header'
 
-    const CustomTableCell = TableCell.extend({
-    addAttributes() {
-        return {
-        // 展开现有属性,?.是可选链操作符,可以自行百度(懂的大佬当我没说)
-        ...this.parent?.(),
+    const user = useUserStore()
 
-        // 添加新的属性
-        backgroundColor: {
-            default: null,
-            parseHTML: (element) => element.getAttribute('data-background-color'),
-            renderHTML: (attributes) => ({
-            'data-background-color': attributes.backgroundColor,
-            style: `background-color: ${attributes.backgroundColor}`
-            })
+    const CustomTableCell = TableCell.extend({
+        addAttributes() {
+            return {
+                // 展开现有属性,?.是可选链操作符,可以自行百度(懂的大佬当我没说)
+                ...this.parent?.(),
+
+                // 添加新的属性
+                backgroundColor: {
+                    default: null,
+                    parseHTML: (element) => element.getAttribute('data-background-color'),
+                    renderHTML: (attributes) => ({
+                        'data-background-color': attributes.backgroundColor,
+                        style: `background-color: ${attributes.backgroundColor}`
+                    })
+                }
+            }
         }
-        }
-    }
     })
     // lowlight.registerLanguage('javascript', javascript)
 
@@ -83,22 +85,38 @@
         const items = pasteData.items;
         if (items && items.length > 0) {
             for (let item of items) {
-                if (item.type.match('image')) {
-                    console.log("粘贴事件触发");
-                    // 处理图片
+                // 检查 item 是不是文件类型
+                if (item.kind === 'file') {
+                    console.log("粘贴事件触发，且 item 是文件类型");
+                    // 将 item 转换为 File 对象
                     const file = item.getAsFile();
-                    const res = await handelImageFile(file);
-                    editor.chain().focus().setImage({ src: res.data.url }).run()
+                    if (file) {
+                        const res = await handelImageFile(file, user.token);
+                        console.log("res:" + JSON.stringify(res.url));
+                        if(editor.value){
+                            console.log("editor初始化");
+                            editor.value.commands.insertContent({
+                                type: 'image',
+                                attrs: {
+                                    src: res.url,
+                            },
+                            });
+                            // editor.chain().focus().setImage({ src: res.url }).run()
+                        }else{
+                            console.log("未被初始化");
+                        }
+                        
+                    }
                 }
             }
         }
     }
 
     // 笔记目录生成
-    const tableOfContents = ref([]);
-    const generateContents = () => {
+    // const tableOfContents = ref([]);
+    // const generateContents = () => {
  
-    };
+    // };
 
     // 控制笔记保存信息的提交
     const noteDialogShow = ref(false)
@@ -137,7 +155,6 @@
 
 
     // 提交表单
-    const user = useUserStore()
     const noteFormRef = ref(null)
     const noteFormCheck = ()=>{
         noteFormRef.value.validate(async (valid) => {
@@ -352,6 +369,13 @@ blockquote{
         margin: 0 !important;
     }
 }
+
+// 设置图片上传不在一行显示
+.ProseMirror img {
+    display: block;
+    width: 30%;
+}
+
 /* 设置表格宽高 */
 .ProseMirror table {
   width: 60%; /* 表格宽度 */

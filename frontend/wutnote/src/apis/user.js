@@ -3,7 +3,6 @@ import { ElMessage } from 'element-plus'
 
 // 登录
 export function login(form){
-    console.log(form.name+"hhhh"+form.pass);
     return httpInstance.post('/account/login/',{
             username:form.name,
             password:form.pass
