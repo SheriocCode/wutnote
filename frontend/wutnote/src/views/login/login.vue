@@ -3,7 +3,6 @@
     import { ElMessage } from 'element-plus'
     import { useRouter } from 'vue-router'
     import { login,getMyInfo } from '@/apis/user'
-    import { useUserStore } from '@/stores/user'
 
     const router = useRouter()  
 
@@ -18,9 +17,6 @@
         ]
     }
 
-    // 全局数据存储
-    const user = useUserStore();
-
     // 登录表单校验
     const loginForm = ref(null)
     const resCheck = ()=>{
@@ -28,9 +24,12 @@
         if (valid) {
             const res = await login(form);
             loginForm.value.resetFields();
-            user.token = res.token;
-            const info = await getMyInfo(user.token);
-            user.myinfo = info.data;
+            localStorage.setItem('token',res.token)
+            const token = ref(localStorage.getItem('token'))
+            const info = await getMyInfo(token.value);
+            localStorage.setItem('avator',info.data.avator)
+            localStorage.setItem('nickname',info.data.nickname)
+            localStorage.setItem('signature',info.data.signature)
             ElMessage({ type: 'success', message: "登录成功" })
             router.push("/home").catch(err=>console.error(err));
         } else {

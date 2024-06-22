@@ -6,25 +6,26 @@
     import { getMyNotes, getMyColumns, getMyConcerns, getMyFavors} from '@/apis/user'
 
     // 全局数据存储
-    const user = useUserStore();
+    const token = ref(localStorage.getItem('token'))
 
-    // const userInfo = ref({
-    //     nickname: "zhangjie",
-    //     avator:null,
-    //     signature: "这个人很懒，什么都没有留下......"
-    // })
-    const userInfo = ref({})
+    const userInfo = ref({
+        nickname: localStorage.getItem('nickname'),
+        avator:localStorage.getItem('avator'),
+        signature: localStorage.getItem('signature')
+    })
+    // const userInfo = ref({})
 
     const mynotes = ref({})
     const mycolumns = ref({})
     const myconcerns = ref({})
-     const myfavors = ref({})
+    const myfavors = ref({})
     onMounted(async ()=>{
-        userInfo.value = user.myinfo;
-        mynotes.value = (await getMyNotes(user.token)).data.records;
-        mycolumns.value = (await getMyColumns(user.token)).data.records;
-        myconcerns.value = (await getMyConcerns(user.token)).data.records;
-        myfavors.value = (await getMyFavors(user.token)).data.records;
+        // userInfo.value = JSON.parse(myinfo);
+        console.log("userinfo:"+userInfo.avator);
+        mynotes.value = (await getMyNotes(token.value)).data.records;
+        mycolumns.value = (await getMyColumns(token.value)).data.records;
+        myconcerns.value = (await getMyConcerns(token.value)).data.records;
+        myfavors.value = (await getMyFavors(token.value)).data.records;
     })
 </script>
 
@@ -33,11 +34,13 @@
         <div class="main-box">
             <div class="my-box">
                 <div class="info-box">
-                    <img :src="userInfo.avator" alt="">
+                    <img v-if="userInfo.avator" src="@/assets/avator.png" alt="">
+                    <img v-else :src="userInfo.avator" alt="">
                     <!-- <img src="@/assets/image.png" alt=""> -->
                     <div>
                         <div class="author">{{userInfo.nickname}}</div>
-                        <div class="sign">{{userInfo.signature}}</div>
+                        <div v-if="userInfo.signature" class="sign">{{userInfo.signature}}</div>
+                        <div v-else class="sign">这是一个非常神秘的人...</div>
                     </div>
                 </div>
                 <div class="menu-box">

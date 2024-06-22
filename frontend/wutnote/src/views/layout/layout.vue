@@ -12,17 +12,15 @@
         // select.style.borderbottom = '1px solid #fff'
     }
 
-    // 全局数据存储
-    const user = useUserStore();
+    const token = localStorage.getItem('token')
     onMounted(()=>{
-        const avator = user.myinfo.avator;
+        const avator = localStorage.getItem('avator');
     })
 
     // 退出登录
     const router = useRouter()
     const exit = ()=>{
-        user.token=''
-        user.myinfo = null
+        localStorage.clear();
         router.push('/login') 
     }
     
@@ -58,8 +56,8 @@
                     </div>
                 </div>
                 <el-dropdown>
-                    <div class="avatar" v-if="user.token">
-                        <el-avatar :size="30" :src="user.myinfo.avator" />
+                    <div class="avatar" v-if="token">
+                        <el-avatar :size="30" :src="avator" />
                     </div>
                     <div v-else>
                         <button class="login-button" @click="router.push('/login')">登录</button>

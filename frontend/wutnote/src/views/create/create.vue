@@ -25,6 +25,7 @@
     import TableHeader from '@tiptap/extension-table-header'
 
     const user = useUserStore()
+    const token = ref(localStorage.getItem('token'))
 
     const CustomTableCell = TableCell.extend({
         addAttributes() {
@@ -54,7 +55,7 @@
 //   },
 // });
     const editor = useEditor({
-        content: `<h1>Heading 1</h1><p>Some content here...</p><h2>Heading 2</h2><p>Some more content here...</p>`,
+        content: '',
         extensions:[
             Document,
             StarterKit,
@@ -87,20 +88,19 @@
             for (let item of items) {
                 // 检查 item 是不是文件类型
                 if (item.kind === 'file') {
-                    console.log("粘贴事件触发，且 item 是文件类型");
                     // 将 item 转换为 File 对象
                     const file = item.getAsFile();
-                    if (file) {
-                        const res = await handelImageFile(file, user.token);
-                        console.log("res:" + JSON.stringify(res.url));
+                    if (file && file.type.match('image.*')) {
+                        user.isLoading = true;
+                        const res = await handelImageFile(file, token.value);
                         if(editor.value){
-                            console.log("editor初始化");
                             editor.value.commands.insertContent({
                                 type: 'image',
                                 attrs: {
                                     src: res.url,
                             },
-                            });
+                        });
+                        user.isLoading = false;
                             // editor.chain().focus().setImage({ src: res.url }).run()
                         }else{
                             console.log("未被初始化");
@@ -142,7 +142,6 @@
     }
     // 标签添加
     const handleInputConfirm = () =>{
-        // console.log("hhhhhhhh"+tagIput.value);
         noteForm.tags.push(tagIput.value)
         tagIput.value = ''
         inputVisible.value = false
@@ -158,12 +157,11 @@
     const noteFormRef = ref(null)
     const noteFormCheck = ()=>{
         noteFormRef.value.validate(async (valid) => {
-            console.log("1111111");
             if (valid) {  
-                console.log("hhhhhh");
                 // 获取编辑器里面的内容
                 noteForm.content = editor.value.getHTML();       
-                await addNote(noteForm,user.token);                                        
+                await addNote(noteForm,token.value); 
+                editor.clearContent();                        
                 noteFormRef.value.resetFields();
             }
       });
@@ -185,6 +183,10 @@
                     <editor-content id="editor" :editor="editor"  @paste="handelPaste" style="color:#DCDCDC;"/>
                 </div>
             </el-scrollbar> 
+            <div class="loading-box" v-if="user.isLoading">
+                <img src="@/assets/loading.jpg" alt="" class="loading">
+                <p>图片上传中...</p>
+            </div>
         </div>
         <div class="save-container">
             <div class="save-box">
@@ -230,6 +232,7 @@
             </div> 
         </div>
     </div> 
+    
 
     <!-- 笔记保存表单 -->
     <!-- <el-dialog 
@@ -256,6 +259,21 @@
     display: flex;
     justify-content: center;
     padding: 30px;
+    .loading-box{
+        position: fixed;
+        top: 50%;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        img{
+            width: 30px;
+        }
+        p{
+            margin-top: 5px;
+            color: $text-color;
+        }
+    }
 }
 .editor-box{                                  
     width: 800px;

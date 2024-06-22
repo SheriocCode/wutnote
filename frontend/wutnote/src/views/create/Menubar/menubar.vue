@@ -7,6 +7,7 @@
     import { Node } from '@tiptap/core'
 
     const user = useUserStore()
+    const token = ref(localStorage.getItem('token'))
 
     const props = defineProps({
         editor: {
@@ -129,28 +130,21 @@
             
         // }
     })
-    const isLoading = ref(false)
-    const fileList = ref([])
-    const res = ref()
+    
+    // const fileList = ref([])
     const uploadImgChange = async (file, fileList) => {
         // props.editor.commands.insertContent({
         //     type: 'loading',
         // });
         if (file.raw) {
+            user.isLoading = true;
             const ImgFile = file.raw; // 直接使用file.raw，它是一个File对象
-            res.value = await handelImageFile(ImgFile, user.token);
+            const res = await handelImageFile(ImgFile, token.value);
+            console.log("res:"+res.url);
             props.editor.chain().focus().setImage({ src: res.url }).run()
+            user.isLoading = false;
         }
     }
-    // const LoadingNode = Node.create({
-    //     name: 'loading',
-    //     group: 'inline',
-    //     atom: true,
-    //     selectable: false,
-    //     renderHTML({ node }) {
-    //         return '<p style="color:red">加载中...</p>'; // 使用自定义的 HTML 标签或现有的图标
-    //     },
-    // });
 
     
 
@@ -214,7 +208,6 @@
 <template>
     <div class="bar-container">
         <div class="bar-box">
-            <!-- <div :class="['icon-item' ,name==item.icon?'active':'']" -->
             <div :class="['icon-item' ,name==item.icon?'active':'']"
                 v-for="item in items" 
                 :key="item.icon"

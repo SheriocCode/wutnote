@@ -72,7 +72,7 @@ export function getMyConcerns(token){
 
 // 获取我的收藏
 export function getMyFavors(token){
-    return httpInstance.get('/account/favors//',{
+    return httpInstance.get('/account/favors/',{
         headers:{
             'Authorization': `Bearer ${token}`
         }

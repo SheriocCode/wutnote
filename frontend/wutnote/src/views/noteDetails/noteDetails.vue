@@ -124,6 +124,10 @@
 .content{
     background-color: $low-theme-color;
     padding: 20px;
+    img{
+        display: block;
+        width: 30%;
+    }
 }
 </style>
 <style lang="scss">

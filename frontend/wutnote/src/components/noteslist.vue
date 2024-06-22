@@ -48,9 +48,12 @@
 <style lang="scss" scoped>
 .note-box{
     // font-family: '微软雅黑';
+    background-color: $low-theme-color;
     width: 500px;
-    border-bottom: 1px solid $border-color;
-    margin-bottom: 20px;
+    border: 1px solid $border-color;
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 10px;
     cursor: pointer;
     .title{
         padding: 10px 0;
@@ -74,6 +77,13 @@
             .item{
                 margin-right: 10px;
             }
+        }
+        .tags-box .item{
+            border: 1px solid $theme-active;
+            color: $theme-active;
+            border-radius: 12px;
+            font-size: 10px;
+            padding: 5px;
         }
     }
 }

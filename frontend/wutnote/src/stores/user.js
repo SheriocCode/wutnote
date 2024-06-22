@@ -3,9 +3,7 @@ import { defineStore } from "pinia"
 export const useUserStore = defineStore('user',{
     state:() => {
         return {
-            token:'',
-            // htmlContent:null
-            myinfo:{}
+            isLoading:false
         }
     },
     actions:{
