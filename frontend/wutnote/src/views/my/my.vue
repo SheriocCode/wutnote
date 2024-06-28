@@ -1,5 +1,5 @@
 <script setup>
-    import { ref,onMounted } from 'vue'
+    import { ref,onMounted,computed } from 'vue'
     import { useUserStore } from '@/stores/user'
     import noteslistVue from "@/components/noteslist.vue"
     import columnslistVue from "@/components/columnslist.vue"
@@ -8,11 +8,11 @@
     // 全局数据存储
     const token = ref(localStorage.getItem('token'))
 
-    const userInfo = ref({
-        nickname: localStorage.getItem('nickname'),
-        avator:localStorage.getItem('avator'),
-        signature: localStorage.getItem('signature')
-    })
+   
+    const nickname = ref(localStorage.getItem('nickname'));
+    const avator = ref(localStorage.getItem('avator'));
+    const signature = ref(localStorage.getItem('signature'));
+  
     // const userInfo = ref({})
 
     const mynotes = ref({})
@@ -21,7 +21,7 @@
     const myfavors = ref({})
     onMounted(async ()=>{
         // userInfo.value = JSON.parse(myinfo);
-        console.log("userinfo:"+userInfo.avator);
+        console.log("userinfo:"+signature.value);
         mynotes.value = (await getMyNotes(token.value)).data.records;
         mycolumns.value = (await getMyColumns(token.value)).data.records;
         myconcerns.value = (await getMyConcerns(token.value)).data.records;
@@ -34,13 +34,13 @@
         <div class="main-box">
             <div class="my-box">
                 <div class="info-box">
-                    <img v-if="userInfo.avator" src="@/assets/avator.png" alt="">
-                    <img v-else :src="userInfo.avator" alt="">
+                    <img v-if="avator" src="@/assets/avator.png" alt="">
+                    <img v-else :src="avator" alt="">
                     <!-- <img src="@/assets/image.png" alt=""> -->
                     <div>
-                        <div class="author">{{userInfo.nickname}}</div>
-                        <div v-if="userInfo.signature" class="sign">{{userInfo.signature}}</div>
-                        <div v-else class="sign">这是一个非常神秘的人...</div>
+                        <div class="author">{{nickname}}</div>
+                        <div class="sign">{{signature}}</div>
+                        <!-- <div v-else class="sign">这是一个非常神秘的人...</div>  -->
                     </div>
                 </div>
                 <div class="menu-box">

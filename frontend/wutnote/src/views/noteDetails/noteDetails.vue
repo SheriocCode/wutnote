@@ -22,7 +22,8 @@
                 <p class="title">{{noteInfo.title}}</p>
                 <div class="author-info">
                     <div class="top-info">
-                        <img src="@/assets/image.png" alt="">
+                        <img src="@/assets/avator.png" alt="">
+                        <!-- <img v-else :src="userInfo.avator" alt=""> -->
                         <p>{{noteInfo.author}}</p>
                         <div class="tags">
                             <div class="tag-item" v-for="tag in noteInfo.tags" :key="tag.tag_id">{{tag.tagname}}</div>
@@ -124,10 +125,10 @@
 .content{
     background-color: $low-theme-color;
     padding: 20px;
-    img{
-        display: block;
-        width: 30%;
-    }
+    // img{
+    //     display: block;
+    //     width: 500px;
+    // }
 }
 </style>
 <style lang="scss">

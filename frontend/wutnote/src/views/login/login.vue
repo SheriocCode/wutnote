@@ -29,7 +29,12 @@
             const info = await getMyInfo(token.value);
             localStorage.setItem('avator',info.data.avator)
             localStorage.setItem('nickname',info.data.nickname)
-            localStorage.setItem('signature',info.data.signature)
+            if (info.data.signature) {
+                localStorage.setItem('signature', info.data.signature);
+            } else {
+                // 可以设置一个默认值或者不设置
+                localStorage.setItem('signature', '这是一个很神秘的人...');
+            }
             ElMessage({ type: 'success', message: "登录成功" })
             router.push("/home").catch(err=>console.error(err));
         } else {

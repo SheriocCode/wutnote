@@ -1,6 +1,7 @@
 <script setup>
     import { ref, onMounted, reactive } from 'vue'
     import { useUserStore } from '@/stores/user'
+    import { useRouter } from 'vue-router'
     import { handelImageFile,addNote } from '@/apis/create'
     import { ElMessage } from 'element-plus'
     import { Back } from '@element-plus/icons-vue'
@@ -25,6 +26,7 @@
     import TableHeader from '@tiptap/extension-table-header'
 
     const user = useUserStore()
+    const router = useRouter()
     const token = ref(localStorage.getItem('token'))
 
     const CustomTableCell = TableCell.extend({
@@ -152,6 +154,12 @@
         noteForm.tags.splice(index,1)
     }
 
+    // 提交弹窗控制
+    const uploadDialogVisible = ref(!user.dialogVisible)
+    const returnHome = () =>{
+        uploadDialogVisible.value = false;
+        router.push('/home');
+    }
 
     // 提交表单
     const noteFormRef = ref(null)
@@ -161,16 +169,12 @@
                 // 获取编辑器里面的内容
                 noteForm.content = editor.value.getHTML();       
                 await addNote(noteForm,token.value); 
-                editor.clearContent();                        
+                editor.value.commands.clearContent();                     
                 noteFormRef.value.resetFields();
             }
       });
     }
-    // 取消提交
-    // const handelCancel = () =>{
-    //     noteForm.tags = '';
-    //     noteDialogShow.value = false;
-    // }
+    
 </script>
 
 <template>
@@ -183,10 +187,26 @@
                     <editor-content id="editor" :editor="editor"  @paste="handelPaste" style="color:#DCDCDC;"/>
                 </div>
             </el-scrollbar> 
+            <!-- 图片加载动画 -->
             <div class="loading-box" v-if="user.isLoading">
                 <img src="@/assets/loading.jpg" alt="" class="loading">
                 <p>图片上传中...</p>
             </div>
+            <!-- 提交笔记跳转弹窗 -->
+            <el-dialog
+                v-model="uploadDialogVisible"
+                width="250"
+                align-center>
+                <span>笔记发布成功!</span>
+                <template #footer>
+                <div class="dialog-footer">
+                    <el-button @click="returnHome">返回首页</el-button>
+                    <el-button type="primary" @click="uploadDialogVisible = false">
+                    继续编辑
+                    </el-button>
+                </div>
+                </template>
+            </el-dialog>
         </div>
         <div class="save-container">
             <div class="save-box">
@@ -232,19 +252,6 @@
             </div> 
         </div>
     </div> 
-    
-
-    <!-- 笔记保存表单 -->
-    <!-- <el-dialog 
-        v-model="noteDialogShow" 
-        title="笔记保存" 
-        width="400" align-center>
-        
-        <div class="button-box">
-            <el-button @click="handelCancel">取消</el-button>
-            <el-button type="primary" @click="noteFormCheck">保存</el-button>
-        </div>
-    </el-dialog>  -->
 </template>
 
 <style lang="scss" scoped>
@@ -273,8 +280,9 @@
             margin-top: 5px;
             color: $text-color;
         }
-    }
+    } 
 }
+
 .editor-box{                                  
     width: 800px;
     padding: 20px 50px;
@@ -423,4 +431,13 @@ blockquote{
   background-color: $theme-color; /* 背景色 */
 }
 
+</style>
+<style lang="scss">
+// .el-dialog{
+//     background-color: $low-theme-color;
+// } 
+.dialog-footer{
+    display: flex;
+    justify-content: center;
+}
 </style>

@@ -11,7 +11,8 @@
     const router = useRouter()
     const navToNoteDetail = (id) =>{
       // console.log("id:"+id);
-      router.push(`/note/${id}`)
+       window.open(`/note/${id}`, '_blank');
+    //   router.push(`/note/${id}`)
     }
 </script>
 

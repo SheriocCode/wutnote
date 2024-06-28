@@ -28,7 +28,7 @@ export function addNote(form,token){
             'Authorization': `Bearer ${token}`
         }
     }).then(res=>{
-        ElMessage('保存成功')
+        console.log("打开弹窗！");
         return res.data
     }).catch(err=>{
         ElMessage.error('上传失败！')
