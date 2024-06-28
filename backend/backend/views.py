@@ -38,41 +38,44 @@ def upload_images(request):
 
         # TODO:后期对上传图片操作进行数据库记录
         
-        return JsonResponse({'status': 'success', 'url': response_url})
+        return JsonResponse({'code': 200, 'msg': 'success upload','data':{'url':response_url}})
     else:
-        return JsonResponse({'status': 'failed', 'message': 'Invalid request method'})
+        return JsonResponse({'code': 400, 'msg': 'Invalid request method'})
     
 
 """新建笔记"""
 @csrf_exempt
 @jwt_required
 def edit(request):
-    user = User.objects.get(id = request.user_id)
+    if request.method == 'POST':
+        user = User.objects.get(id = request.user_id)
 
-    data = JSONParser().parse(request)
-    
-    # 创建或获取标签
-    tags = []
-    for tag_data in data.get('tags', []):
-        tag_id = tag_data.get('tagid')
-        tag, created = Tag.objects.get_or_create(id=tag_id)
-        tags.append(tag)
-    
-    # 创建笔记实例
-    note = Note(
-        title=data.get('title'),
-        abstract=data.get('abstract'),
-        content=data.get('content'),
-        user=user  
-    )
-    note.save()
-    
-    # 关联笔记和标签
-    note.tags.set(tags)
-    
-    # 返回响应
-    serializer = NoteSerializer(note)
-    return JsonResponse(serializer.data, status=201)
+        data = JSONParser().parse(request)
+        
+        # 创建或获取标签
+        tags = []
+        for tag_data in data.get('tags', []):
+            tag_id = tag_data.get('tagid')
+            tag, created = Tag.objects.get_or_create(id=tag_id)
+            tags.append(tag)
+        
+        # 创建笔记实例
+        note = Note(
+            title=data.get('title'),
+            abstract=data.get('abstract'),
+            content=data.get('content'),
+            user=user  
+        )
+        note.save()
+        
+        # 关联笔记和标签
+        note.tags.set(tags)
+        
+        # 返回响应
+        serializer = NoteSerializer(note)
+        return JsonResponse({'code':200, 'msg':'success upload', 'data':{}})
+    else:
+        return JsonResponse({'code': 400, 'msg': 'Invalid request method'})
 
 import time
 """流式返回数据"""
