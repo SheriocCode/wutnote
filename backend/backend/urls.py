@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from .views import upload_images, edit, stream_response, get_hunyuan_response
+from .views import upload_images, edit, stream_response, get_hunyuan_response, follow, unfollow
 
 from django.http import HttpResponse
 from django.conf.urls.static import static
@@ -32,4 +32,8 @@ urlpatterns = [
 
     path('stream_response/', stream_response, ), # 流式返回数据
     path('get_hunyuan_response/', get_hunyuan_response, name='get_hunyuan_response'),
+
+    path('follow/',follow), # 关注用户
+    path('unfollow/',unfollow)
+
 ]

@@ -131,3 +131,10 @@ def get_hunyuan_response(request):
         return JsonResponse(response.json())
     else:
         return JsonResponse({"error": "Invalid request method. Please use POST."})
+
+
+def follow(request):
+    return JsonResponse({"hello":"hello"})
+
+def unfollow(request):
+    return JsonResponse({"heloo":"hello"})
