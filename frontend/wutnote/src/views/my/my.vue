@@ -1,123 +1,102 @@
 <script setup>
-    import { ref,onMounted,computed } from 'vue'
-    import { useUserStore } from '@/stores/user'
-    import noteslistVue from "@/components/noteslist.vue"
-    import columnslistVue from "@/components/columnslist.vue"
-    import { getMyNotes, getMyColumns, getMyConcerns, getMyFavors} from '@/apis/user'
+    import { EditPen } from '@element-plus/icons-vue'
+    import { computed, ref } from 'vue'
 
-    // 全局数据存储
-    const token = ref(localStorage.getItem('token'))
+    const nickname = ref(localStorage.getItem("nickname"))
+    const signature = ref(localStorage.getItem("signature"))
 
-   
-    const nickname = ref(localStorage.getItem('nickname'));
-    const avator = ref(localStorage.getItem('avator'));
-    const signature = ref(localStorage.getItem('signature'));
-  
-    // const userInfo = ref({})
+    // 控制笔记的更改
+    const isDisabled = ref(true)
+    const inputSytle = computed(()=>{
+        return isDisabled.value ? 'disinput' : '';
+    }) 
 
-    const mynotes = ref({})
-    const mycolumns = ref({})
-    const myconcerns = ref({})
-    const myfavors = ref({})
-    onMounted(async ()=>{
-        // userInfo.value = JSON.parse(myinfo);
-        console.log("userinfo:"+signature.value);
-        mynotes.value = (await getMyNotes(token.value)).data.records;
-        mycolumns.value = (await getMyColumns(token.value)).data.records;
-        myconcerns.value = (await getMyConcerns(token.value)).data.records;
-        myfavors.value = (await getMyFavors(token.value)).data.records;
-    })
+    // 提交个人信息的修改
+    const updateMyInfo = () =>{
+
+    }
+
 </script>
 
 <template>
-    <el-container class="main-container">
-        <div class="main-box">
-            <div class="my-box">
-                <div class="info-box">
-                    <img v-if="avator" src="@/assets/avator.png" alt="">
-                    <img v-else :src="avator" alt="">
-                    <!-- <img src="@/assets/image.png" alt=""> -->
-                    <div>
-                        <div class="author">{{nickname}}</div>
-                        <div class="sign">{{signature}}</div>
-                        <!-- <div v-else class="sign">这是一个非常神秘的人...</div>  -->
-                    </div>
+    <el-container class="info-container">
+        <div class="info-box">
+            <img src="@/assets/avator.png" alt="">
+            <div class="edit-info">
+                <div class="input-item">
+                    <div class="label">昵称</div>
+                    <input type="text" 
+                        v-model="nickname" 
+                        :disabled="isDisabled"
+                        :class="inputSytle">
+                    <el-icon @click="isDisabled = false"><EditPen /></el-icon>
                 </div>
-                <div class="menu-box">
-                    <el-tabs tab-position="left"  class="tabs-box">
-                        <el-tab-pane label="笔记">
-                            <noteslistVue :notesList="mynotes"/>
-                        </el-tab-pane>
-                        <el-tab-pane label="专栏">
-                            <columnslistVue :columnslist="mycolumns"/>
-                        </el-tab-pane>
-                        <el-tab-pane label="关注"></el-tab-pane>
-                        <el-tab-pane label="收藏">
-                            <noteslistVue :notesList="myfavors"/>
-                        </el-tab-pane>
-                    </el-tabs>
+                <div class="input-item">
+                    <div class="label">个性签名</div>
+                    <input type="text" 
+                        v-model="signature" 
+                        :disabled="isDisabled"
+                        :class="inputSytle">
+                    <el-icon @click="isDisabled = false"><EditPen /></el-icon>
                 </div>
+            </div>
+            <div class="button-box">
+                <button style="margin-right:50px;">取消</button>
+                <button @click="updateMyInfo">修改</button>
             </div>
         </div>
     </el-container>
 </template>
 
 <style lang="scss" scoped>
-.main-container{
+.info-container{
     display: flex;
     justify-content: center;
-    background-color: $theme-color;
+    padding: 60px 0;
 }
-.main-box{
-    display: flex;
-    justify-content: center;
+.info-box{
+    display: inline-block;
+    border: 1px solid #fff;
+    border-radius: 15px;
+    padding: 50px;
+    img{
+        width: 80px;
+        border-radius: 50%;
+    }
 }
-.my-box{
-    margin-top: 20px;
-    width: 800px;
-    display: flex;
-    flex-direction: column;
-    padding: 30px;
-    border-radius: 8px;
-    background-color: #141414;
-    border: 2px solid $border-color;
-    .info-box{
+.edit-info{
+    .input-item{
+        display: flex;
+        margin: 20px;
         display: flex;
         align-items: center;
-        img{
-            width: 100px;
-            border-radius: 50%;
-            margin-right: 20px;
+        .label{
+            width: 70px;
+            text-align: center;
+            color: #fff;
+            margin-right: 10px;
         }
-        .author{
-            font-weight: bold;
-            color: $text-color;
+        /* 可编辑时的样式 */
+        input{
+            border-bottom: 1px solid #fff;
+            background-color: $theme-color;
         }
-        .sign{
-            margin-top: 10px;
-            font-size: 12px;
-            color: $text-color;
+        /* 不可编辑时的样式 */
+        .disinput{
+            color:$text-color;
+            border-bottom: 1px solid #fff;
+            background-color: $theme-color;
+        }
+        .el-icon{
+            margin-left: 10px;
+            color: #fff;
         }
     }
-    .menu-box{
-        margin-top: 30px;
-        .el-tab-pane{
-           margin-left: 50px;
-        }
-    }
+    
 }
-</style>
-<style lang="scss">
-.el-tabs__item.is-active {
-    color: $theme-active;
-}
-.el-tabs__item{
-    color: $text-color;
-}
-.el-tabs__item:hover{
-    color: $theme-active;
-}
-.el-tabs__active-bar{
-    background-color: $theme-active;
+.button-box{
+    padding: 50px;
+    display: flex;
+    justify-content: center;
 }
 </style>

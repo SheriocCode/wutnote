@@ -12,9 +12,15 @@ body::-webkit-scrollbar {
 }
 input{
     outline: none;
-    background-color: #282828;
     border: none;
     color:#DCDCDC;
+}
+button{
+    border: none;
+    background-color: #DCFF07;
+    padding: 5px 20px;
+    border-radius: 10px;
+    cursor: pointer;
 }
 
 $theme-color:#0C0C0C;

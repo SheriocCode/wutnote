@@ -1,5 +1,5 @@
 import httpInstance from "@/utils/utils"
-import { ElMessage } from 'element-plus'
+import { useUserStore } from "@/stores/user"
 
 // 处理上传的图片
 export function handelImageFile(file,token){
@@ -12,6 +12,8 @@ export function handelImageFile(file,token){
     }).then(res=>{
         return res.data
     }).catch(err=>{
+        const user = useUserStore();
+        user.isLoading = false;
         ElMessage.error('上传出错！')
     })
 }
@@ -28,8 +30,7 @@ export function addNote(form,token){
             'Authorization': `Bearer ${token}`
         }
     }).then(res=>{
-        console.log("打开弹窗！");
-        return res.data
+        return res;
     }).catch(err=>{
         ElMessage.error('上传失败！')
     })

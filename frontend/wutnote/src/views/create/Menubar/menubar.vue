@@ -125,23 +125,17 @@
     // 图片上传样式
     const imgItem = reactive({
         icon:'icon-charutupian',
-        title:'图片',
-        // action: function(){
-            
-        // }
+        title:'图片'
     })
     
-    // const fileList = ref([])
+    // 上传本地图片
     const uploadImgChange = async (file, fileList) => {
-        // props.editor.commands.insertContent({
-        //     type: 'loading',
-        // });
         if (file.raw) {
             user.isLoading = true;
             const ImgFile = file.raw; // 直接使用file.raw，它是一个File对象
             const res = await handelImageFile(ImgFile, token.value);
-            console.log("res:"+res.url);
-            props.editor.chain().focus().setImage({ src: res.url }).run()
+            const imgHTML = `<img src="${res.url}" style="width: 800px;" />`;
+            props.editor.chain().focus().insertContent(imgHTML).run();
             user.isLoading = false;
         }
     }

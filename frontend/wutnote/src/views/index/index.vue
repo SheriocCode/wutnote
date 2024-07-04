@@ -9,9 +9,11 @@
     const tagSelect = ref()
 
     const notesList = ref({})
+    const total = ref()
     onMounted(async ()=>{
         const res = await getNotesList();
         notesList.value = res.records;
+        total.value = res.total;
     })
 </script>
 
@@ -33,6 +35,13 @@
                 <div class="right-box">
                     <p>笔记精选</p>
                     <noteslistVue :notesList="notesList"/>
+                    <!-- 笔记分页组件 -->
+                    <div class="pages">
+                        <el-pagination 
+                            layout="prev, pager, next" 
+                            :total="total"
+                            :page-size="8" />
+                    </div>
                 </div>
             </div>
         </div>
@@ -46,7 +55,6 @@
     background-color: $theme-color;
 }
 .main-box{
-    // background-color: pink;
     width: 1000px;
     display: flex;
     flex-direction: column;
@@ -127,4 +135,21 @@
 .el-checkbox .el-checkbox__label{
     margin-left: 18px;
 }
+
+/* 分页组件样式 */
+.pages{
+    display: flex;
+    justify-content: end;
+    .el-pagination{
+        button,li{
+            background-color: $theme-color;
+            border: 1px solid $border-color;
+            color:$text-color;
+            margin: 5px;
+        }
+        .el-pager .is-active{
+            border: 1px solid $theme-active;
+        }
+    }
+} 
 </style>

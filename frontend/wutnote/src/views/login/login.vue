@@ -27,12 +27,13 @@
             localStorage.setItem('token',res.token)
             const token = ref(localStorage.getItem('token'))
             const info = await getMyInfo(token.value);
-            localStorage.setItem('avator',info.data.avator)
             localStorage.setItem('nickname',info.data.nickname)
+            // 设置默认头像
+            localStorage.setItem('avator', info.data.avator);
+            // 设置默认签名
             if (info.data.signature) {
                 localStorage.setItem('signature', info.data.signature);
             } else {
-                // 可以设置一个默认值或者不设置
                 localStorage.setItem('signature', '这是一个很神秘的人...');
             }
             ElMessage({ type: 'success', message: "登录成功" })

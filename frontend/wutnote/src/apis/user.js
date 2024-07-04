@@ -6,7 +6,6 @@ export function login(form){
     return httpInstance.post('/account/login/',{
             username:form.name,
             password:form.pass
-     
     },{
         headers:{
             'Content-Type': 'application/x-www-form-urlencoded'
@@ -82,3 +81,8 @@ export function getMyFavors(token){
         ElMessage.error('获取出错！')
     })
 }
+
+// 修改个人信息
+// export function updateInfo(){
+//     return httpInstance.post()
+// }

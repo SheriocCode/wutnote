@@ -4,17 +4,13 @@
     import { useUserStore } from '@/stores/user'
     import { useRouter } from 'vue-router'
 
-    // 菜单选项激活
-    const activeIndex = ref(1)
-    const handleSelect = (index)=>{
-        activeIndex.value = index;
-        // const select = document.getElementsByClassName('el-menu-item')[index];
-        // select.style.borderbottom = '1px solid #fff'
-    }
-
     const token = localStorage.getItem('token')
+    const avator = ref()
     onMounted(()=>{
-        const avator = localStorage.getItem('avator');
+        avator.value = localStorage.getItem('avator');
+        // window.addEventListener('beforeunload', (event) => {
+        //     localStorage.clear(); // 用户关闭网页时清除所有localStorage数据
+        // });
     })
 
     // 退出登录
@@ -32,35 +28,29 @@
             <el-header height="60px">
                 <div class="menu-box">
                     <div class="header-menu">
-                        <router-link to="/home">
-                            <div :class="['menu-item',{ active: activeIndex === 1 }]"
-                                @click="handleSelect(1)">
+                        <router-link to="/home" active-class="active">
+                            <div class="menu-item">
                                 <el-icon><House /></el-icon>
                                 <span>首页</span>
                             </div>
                         </router-link>
-                        <router-link to="/create">
-                             <div :class="['menu-item',{ active: activeIndex === 2 }]"
-                                @click="handleSelect(2)">
+                        <router-link to="/create" active-class="active">
+                             <div class="menu-item">
                                 <el-icon><Edit /></el-icon>
                                 <span>创作中心</span>
                             </div>
                         </router-link>
-                        <router-link to="/my">
-                             <div :class="['menu-item',{ active: activeIndex === 3 }]"
-                                @click="handleSelect(3)">
+                        <router-link to="/my" active-class="active">
+                             <div class="menu-item">
                                 <el-icon><Avatar /></el-icon>
                                 <span>个人空间</span>
                             </div>
                         </router-link>
                     </div>
                 </div>
-                <el-dropdown>
-                    <div class="avatar" v-if="token">
-                        <el-avatar :size="30" :src="avator" />
-                    </div>
-                    <div v-else>
-                        <button class="login-button" @click="router.push('/login')">登录</button>
+                <el-dropdown v-if="token">
+                    <div class="avatar" >
+                        <img :src="avator" alt="">
                     </div>
                     <template #dropdown>
                         <el-dropdown-menu>
@@ -71,6 +61,9 @@
                         </el-dropdown-menu>
                     </template>
                 </el-dropdown>
+                <div v-else>
+                    <button class="login-button" @click="router.push('/login')">登录</button>
+                </div>
             </el-header>
             <router-view></router-view>
         </el-container>
@@ -79,7 +72,7 @@
 
 <style lang="scss" scoped>
 .index-contanier{
-    // background-color: $border-color;
+    background-color: $theme-color;
     position: absolute;
     top: 0;
     left: 0;
@@ -101,6 +94,10 @@
         border: none;
         display: flex;
         justify-content: space-around;
+        .active{
+            border-bottom:2px solid $theme-active;
+            font-weight: bold;
+        }
         .menu-item{
             display: flex;
             justify-content: center;
@@ -109,21 +106,21 @@
             margin: 0 10px;
             color:$theme-text;
         }
-        .active{
-            border-bottom:2px solid $theme-active;
-            font-weight: bold;
-        }
        
     }
 }
-.login-button{
-    border: none;
-    background-color: $theme-active;
-    padding: 5px 20px;
-    border-radius: 10px;
-}
+
 .el-dropdown{
     cursor: pointer;
+    .avatar{
+        width: 40px;
+        height: 40px;
+        background-color: pink;
+        border-radius: 50%;
+        img{
+            width: 100%;
+        }
+    }
 }
 @media(max-width:900px){
     .index-contanier{

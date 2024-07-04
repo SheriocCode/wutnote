@@ -17,33 +17,33 @@
 </script>
 
 <template>
-  <div class="notes-container">
-    <div class="note-box" v-for="note in notesList" :key="note.note_id" @click="navToNoteDetail(note.note_id)">
-        <div class="title">{{note.title}}</div>
-        <div class="abstract">{{note.abstract}}</div>
-        <div class="info">
-            <div class="left-box">
-                <div class="tags-box" v-for="tags in note.tags" :key="tags.tag_id">
-                    <div class="item">{{tags.tagname}}</div>
+    <div class="notes-container">
+        <div class="note-box" v-for="note in notesList" :key="note.note_id" @click="navToNoteDetail(note.note_id)">
+            <div class="title">{{note.title}}</div>
+            <div class="abstract">{{note.abstract}}</div>
+            <div class="info">
+                <div class="left-box">
+                    <div class="tags-box" v-for="tags in note.tags" :key="tags.tag_id">
+                        <div class="item">{{tags.tagname}}</div>
+                    </div>
                 </div>
-            </div>
-            <div class="right-box">
-                <div class="item">
-                    <i class="iconfont icon-liulan4"></i>
-                    {{note.borwse_num}}
-                </div>
-                <div class="item">
-                    <i class="iconfont icon-shoucang"></i>
-                    {{note.collect_num}}
-                </div>
-                <div class="item">
-                    <i class="iconfont icon-xihuan"></i>
-                    {{note.like_num}}
+                <div class="right-box">
+                    <div class="item">
+                        <i class="iconfont icon-liulan4"></i>
+                        {{note.borwse_num}}
+                    </div>
+                    <div class="item">
+                        <i class="iconfont icon-shoucang"></i>
+                        {{note.collect_num}}
+                    </div>
+                    <div class="item">
+                        <i class="iconfont icon-xihuan"></i>
+                        {{note.like_num}}
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-  </div>
 </template>
 
 <style lang="scss" scoped>
@@ -88,4 +88,5 @@
         }
     }
 }
+
 </style>

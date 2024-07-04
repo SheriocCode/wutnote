@@ -95,30 +95,25 @@
                     if (file && file.type.match('image.*')) {
                         user.isLoading = true;
                         const res = await handelImageFile(file, token.value);
-                        if(editor.value){
-                            editor.value.commands.insertContent({
-                                type: 'image',
-                                attrs: {
-                                    src: res.url,
+                        // const imgHTML = `<img src="${res.url}" width="500px" />`;
+                        const imgHTML = {
+                            type: 'image',
+                            attrs: {
+                                src: res.url,
+                                style: 'width: 500px; height: auto;', // 使用内联样式
                             },
-                        });
-                        user.isLoading = false;
-                            // editor.chain().focus().setImage({ src: res.url }).run()
-                        }else{
-                            console.log("未被初始化");
+                        };
+                        if(editor.value){
+                            editor.value.commands.insertContent(imgHTML);
                         }
-                        
-                    }
+                        user.isLoading = false;
+                    }else{
+                        console.log("未被初始化");
+                    }   
                 }
             }
         }
     }
-
-    // 笔记目录生成
-    // const tableOfContents = ref([]);
-    // const generateContents = () => {
- 
-    // };
 
     // 控制笔记保存信息的提交
     const noteDialogShow = ref(false)
@@ -136,6 +131,8 @@
             { required: true, message: '摘要不能为空' }
     ]}
 
+    // 目录生成
+    
 
     const tagIput = ref('')
     const inputVisible = ref(false)
@@ -154,12 +151,6 @@
         noteForm.tags.splice(index,1)
     }
 
-    // 提交弹窗控制
-    const uploadDialogVisible = ref(!user.dialogVisible)
-    const returnHome = () =>{
-        uploadDialogVisible.value = false;
-        router.push('/home');
-    }
 
     // 提交表单
     const noteFormRef = ref(null)
@@ -168,9 +159,14 @@
             if (valid) {  
                 // 获取编辑器里面的内容
                 noteForm.content = editor.value.getHTML();       
-                await addNote(noteForm,token.value); 
-                editor.value.commands.clearContent();                     
-                noteFormRef.value.resetFields();
+                const res = await addNote(noteForm,token.value); 
+                if(res.status == 201){
+                    ElMessage.success("发布成功！")
+                    editor.value.commands.clearContent();                     
+                    noteFormRef.value.resetFields();
+                }else{
+                    ElMessage.error("服务器错误！")
+                }
             }
       });
     }
@@ -192,21 +188,6 @@
                 <img src="@/assets/loading.jpg" alt="" class="loading">
                 <p>图片上传中...</p>
             </div>
-            <!-- 提交笔记跳转弹窗 -->
-            <el-dialog
-                v-model="uploadDialogVisible"
-                width="250"
-                align-center>
-                <span>笔记发布成功!</span>
-                <template #footer>
-                <div class="dialog-footer">
-                    <el-button @click="returnHome">返回首页</el-button>
-                    <el-button type="primary" @click="uploadDialogVisible = false">
-                    继续编辑
-                    </el-button>
-                </div>
-                </template>
-            </el-dialog>
         </div>
         <div class="save-container">
             <div class="save-box">
@@ -338,6 +319,7 @@
     input{
         height: 28px;
         border-radius: 5px;
+        background-color: #282828;
     }
 }
 .note-box{
@@ -399,7 +381,6 @@ blockquote{
 // 设置图片上传不在一行显示
 .ProseMirror img {
     display: block;
-    width: 30%;
 }
 
 /* 设置表格宽高 */
@@ -431,13 +412,4 @@ blockquote{
   background-color: $theme-color; /* 背景色 */
 }
 
-</style>
-<style lang="scss">
-// .el-dialog{
-//     background-color: $low-theme-color;
-// } 
-.dialog-footer{
-    display: flex;
-    justify-content: center;
-}
 </style>
