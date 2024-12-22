@@ -1,3 +1,22 @@
+
+# 项目概览
+PC端笔记
+
+![image](https://github.com/user-attachments/assets/a897cb87-a6a9-4ff9-852c-06ea4c08a792)
+![image](https://github.com/user-attachments/assets/e2b98fd0-93f4-4187-b49a-8e691bb78932)
+
+![image](https://github.com/user-attachments/assets/ae0d4e5e-17fe-47de-bb8e-fbc10112f64c)
+
+![image](https://github.com/user-attachments/assets/0ca48ff9-f6d2-4a34-9f1a-f1fb6da201ff)
+
+管理端
+
+![image](https://github.com/user-attachments/assets/159ec8a2-add8-4399-b798-3cfece2ff3e6)
+
+![image](https://github.com/user-attachments/assets/898df273-c28b-4a2e-b4d5-e2181f7b6963)
+
+
+
 ## 后端配置
 
 ### 虚拟环境配置
