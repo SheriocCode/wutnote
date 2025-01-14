@@ -3,7 +3,7 @@
 ### 项目概览
 一款多平台同步的笔记共享软件，基于**Vue3PC端**+**微信小程序端**+基于**Django后端**管理😍😍
 
-> @[Sherioc](https://github.com/SheriocCode) (゜ω゜)┏=👉：系统架构、页面原型设计、Django后端  
+> @[SheriocCode](https://github.com/SheriocCode) (゜ω゜)┏=👉：系统架构、页面原型设计、Django后端  
 > @[Aminlex](https://github.com/Aminlex)（很棒的前端er）（づ￣3￣）づ╭❤️～：Vue前端、微信小程序端
 
 PC端
