@@ -13,7 +13,6 @@ PC端
 ![image](https://github.com/user-attachments/assets/0ca48ff9-f6d2-4a34-9f1a-f1fb6da201ff)
 
 管理端
-![image](https://github.com/user-attachments/assets/159ec8a2-add8-4399-b798-3cfece2ff3e6)
 ![image](https://github.com/user-attachments/assets/898df273-c28b-4a2e-b4d5-e2181f7b6963)
 
 ### 页面原型（figma）
